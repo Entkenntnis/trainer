@@ -12,8 +12,8 @@
   display: inline-block;
 }
 .mq-editable-field .mq-cursor {
-  border-left: 1px solid black;
-  margin-left: -1px;
+  border-left: 2px solid darkgrey;
+  margin-left: -2px;
   position: relative;
   z-index: 1;
   padding: 0;
@@ -144,10 +144,13 @@
 .mq-math-mode b.mq-font {
   font-weight: bolder;
 }
-.mq-math-mode var,
-.mq-math-mode i,
-.mq-math-mode i.mq-font {
+.mq-default-style .mq-math-mode var,
+.mq-default-style .mq-math-mode i,
+.mq-default-style .mq-math-mode i.mq-font {
   font-style: italic;
+}
+.mq-text-style var {
+  font-style: normal;
 }
 .mq-math-mode var.mq-f {
   margin-right: 0.2em;
@@ -196,7 +199,7 @@
   border-bottom: 1px solid black;
   margin-bottom: 1px;
 }
-.mq-math-mode .mq-binary-operator {
+.mq-default-style .mq-math-mode .mq-binary-operator {
   padding: 0 0.2em;
   display: -moz-inline-box;
   display: inline-block;

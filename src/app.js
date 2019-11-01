@@ -2,18 +2,29 @@ import React from 'react'
 import Head from 'next/head'
 import dynamic from 'next/dynamic'
 
-import 'react-simple-keyboard/build/css/index.css'
+//import 'react-simple-keyboard/build/css/index.css'
 
-const MathQuillComponent = dynamic(() => import('./mathquill'), { ssr: false })
+const MathQuillComponent = dynamic(() => import('./react-mathquill'), {
+  ssr: false
+})
 
-const Keyboard = dynamic(() => import('react-simple-keyboard'), {
+const Keyboard = dynamic(() => import('./react-simple-keyboard'), {
   ssr: false
 })
 
 const App = () => {
   const mathquill = React.useRef()
   return (
-    <div>
+    <div
+      onMouseDown={event => {
+        const target = event.target
+        if (mathquill.current && mathquill.current.el().contains(target)) {
+          return
+        } else {
+          setTimeout(() => mathquill.current.focus())
+        }
+      }}
+    >
       <Head>
         <title>Trainer</title>
         <link rel="icon" href="/favicon.ico" />
@@ -23,20 +34,38 @@ const App = () => {
         <div className="content">
           <div className="mq-field">
             <div className="mq-input">
+              Dein Nickname:
+              <br />
               <MathQuillComponent
+                className="mq-default-style"
                 mathquillDidMount={mq => {
                   mathquill.current = mq
                 }}
                 config={{
-                  substituteTextarea: () => document.createElement('span'),
+                  substituteTextarea: () => {
+                    const element = document.createElement('span')
+                    const att = document.createAttribute('tabindex')
+                    att.value = '0'
+                    element.setAttributeNode(att)
+                    element.addEventListener('blur', () => {
+                      console.log('blur')
+                    })
+                    element.addEventListener('focus', () => {
+                      console.log('focus')
+                    })
+                    return element
+                  },
                   handlers: {}
                 }}
               ></MathQuillComponent>
+              <br />
+              <div className="test-button"></div>
             </div>
           </div>
         </div>
         <div className="keyboard">
           <Keyboard
+            useButtonTag={true}
             onKeyPress={button => {
               if (mathquill.current) {
                 if (button.length == 1) {
@@ -64,13 +93,7 @@ const App = () => {
           padding: 0;
           width: 100vw;
           height: 100vh;
-          -webkit-touch-callout: none; /* iOS Safari */
-          -webkit-user-select: none; /* Safari */
-          -khtml-user-select: none; /* Konqueror HTML */
-          -moz-user-select: none; /* Old versions of Firefox */
-          -ms-user-select: none; /* Internet Explorer/Edge */
-          user-select: none; /* Non-prefixed version, currently
-                                        supported by Chrome, Opera and Firefox */
+          user-select: none;
         }
         .content {
           background-color: #eee;
@@ -94,15 +117,23 @@ const App = () => {
           width: 100%;
           background-color: white;
         }
+        .keyboard :global(.simple-keyboard .hg-row .hg-button:active) {
+          background-color: grey;
+        }
+        .test-button {
+          width: 20px;
+          height: 20px;
+          background-color: blue;
+        }
+        .test-button:active {
+          background-color: orange;
+        }
       `}</style>
 
       <style jsx global>{`
         body {
           margin: 0;
           overflow: hidden;
-        }
-        .simple-keyboard .hg-row .hg-button:active {
-          background-color: grey;
         }
       `}</style>
     </div>
