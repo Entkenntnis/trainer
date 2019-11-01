@@ -4,10 +4,7 @@ import dynamic from 'next/dynamic'
 
 import 'react-simple-keyboard/build/css/index.css'
 
-const MathQuillComponent = dynamic(
-  () => import('./mathquill/Mathquill.component'),
-  { ssr: false }
-)
+const MathQuillComponent = dynamic(() => import('./mathquill'), { ssr: false })
 
 const Keyboard = dynamic(() => import('react-simple-keyboard'), {
   ssr: false
