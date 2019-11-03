@@ -1125,6 +1125,9 @@ function getInterface(v) {
     _.moveToLeftEnd = function() { return this.moveToDirEnd(L); };
     _.moveToRightEnd = function() { return this.moveToDirEnd(R); };
 
+    _.cursorDepth = function() {
+      return this.__controller.cursor.depth()
+    }
     _.keystroke = function(keys) {
       var keys = keys.replace(/^\s+|\s+$/g, '').split(/\s+/);
       for (var i = 0; i < keys.length; i += 1) {
@@ -3904,13 +3907,15 @@ CharCmds['/'] = P(Fraction, function(_, super_) {
   _.createLeftOf = function(cursor) {
     if (!this.replacedFragment) {
       var leftward = cursor[L];
+      console.log('leftward', leftward.ctrlSeq)
       while (leftward &&
         !(
           leftward instanceof BinaryOperator ||
           leftward instanceof (LatexCmds.text || noop) ||
           leftward instanceof SummationNotation ||
           leftward.ctrlSeq === '\\ ' ||
-          /^[,;:]$/.test(leftward.ctrlSeq)
+          /^[,;:]$/.test(leftward.ctrlSeq) ||
+          '()[]'.includes(leftward.ctrlSeq)
         ) //lookbehind for operator
       ) leftward = leftward[L];
 

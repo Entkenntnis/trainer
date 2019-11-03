@@ -35,6 +35,7 @@ export const Page = props => {
                   }
                   return element
                 },
+                supSubsRequireOperand: true,
                 handlers: {}
               }}
             ></MathQuillComponent>
@@ -93,7 +94,16 @@ const TextKeyboard = props => {
           onKeyPress={button => {
             if (props.inputElement.current) {
               if (button.length == 1) {
-                props.inputElement.current.typedText(button)
+                if (
+                  (button == '/' || button == '^') &&
+                  props.inputElement.current.cursorDepth() > 1
+                )
+                  return
+                if ('()[]'.includes(button)) {
+                  props.inputElement.current.write(button)
+                } else {
+                  props.inputElement.current.typedText(button)
+                }
                 if (layout == 'shift') setLayout('default')
               } else if (button == '{bksp}') {
                 props.inputElement.current.keystroke('Backspace')
@@ -107,6 +117,12 @@ const TextKeyboard = props => {
                 setLayout('sym')
               } else if (button == 'ABC') {
                 setLayout('default')
+              } else if (button == '{mixed}') {
+                if (props.inputElement.current.cursorDepth() <= 1) {
+                  props.inputElement.current.write('\\frac{}{}')
+                  props.inputElement.current.keystroke('Left')
+                  props.inputElement.current.keystroke('Left')
+                }
               } else {
                 console.log(button)
               }
@@ -118,6 +134,7 @@ const TextKeyboard = props => {
             '{bksp}': '◄',
             '{shift}': '△',
             '{shifted}': '▲',
+            '{mixed}': 'x-x/x',
             submit: 'Weiter'
           }}
           layout={{
@@ -135,8 +152,8 @@ const TextKeyboard = props => {
             ],
             sym: [
               '1 2 3 4 5 6 7 8 9 0',
-              "ß @ + = - '",
-              ', . : ! ? {bksp}',
+              "ß @ + = - ' / ^ {mixed} ( )",
+              ', . : ! ? [ ] { } {bksp}',
               'ABC {space} submit'
             ]
           }}
@@ -158,6 +175,10 @@ const TextKeyboard = props => {
             .hg-button.hg-standardBtn[data-skbtn='submit']) {
           max-width: 100px;
           background-color: #e4e4ff;
+        }
+        .my-keyboard :global(.simple-keyboard .hg-button span) {
+          min-width: 0.5rem;
+          text-align: center;
         }
       `}</style>
     </>
