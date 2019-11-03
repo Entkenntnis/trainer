@@ -11,6 +11,7 @@
     "jquery": "3.4.1",
     "react": "16.11.0",
     "react-dom": "16.11.0",
+    "simple-keyboard": "^2.26.19",
     "webpack": "^4.0.0"
   },
   "devDependencies": {

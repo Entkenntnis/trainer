@@ -29,11 +29,12 @@
 }
 .mq-editable-field.mq-focused,
 .mq-math-mode .mq-editable-field.mq-focused {
-  -webkit-box-shadow: #8bd 0 0 1px 2px, inset #6ae 0 0 2px 0;
+  /*-webkit-box-shadow: #8bd 0 0 1px 2px, inset #6ae 0 0 2px 0;
   -moz-box-shadow: #8bd 0 0 1px 2px, inset #6ae 0 0 2px 0;
-  box-shadow: #8bd 0 0 1px 2px, inset #6ae 0 0 2px 0;
-  border-color: #709ac0;
+  box-shadow: #8bd 0 0 1px 2px, inset #6ae 0 0 2px 0;*/
+  border-color: #75aaff;
   border-radius: 1px;
+  border-width: 2px;
 }
 .mq-math-mode .mq-editable-field {
   margin: 1px;
@@ -97,10 +98,15 @@
   display: -moz-inline-box;
   display: inline-block;
 }
-.mq-math-mode var,
+.mq-default-style .mq-math-mode var,
 .mq-math-mode .mq-text-mode,
-.mq-math-mode .mq-nonSymbola {
+.mq-default-style .mq-math-mode .mq-nonSymbola {
   font-family: 'Times New Roman', Symbola, serif;
+  line-height: 0.9;
+}
+.mq-text-style .mq-math-mode var,
+.mq-text-style .mq-math-mode .mq-nonSymbola {
+  font-family: 'Arial', 'sans-serif', 'serif';
   line-height: 0.9;
 }
 .mq-math-mode * {
@@ -133,9 +139,14 @@
   margin: 0 -0.1em;
   min-width: 1ex;
 }
-.mq-math-mode .mq-font {
+.mq-default-style .mq-math-mode .mq-font {
   font: 1em 'Times New Roman', Symbola, serif;
 }
+
+.mq-text-style .mq-math-mode .mq-font {
+  font: 1em 'Arial', 'sans-serif', 'serif';
+}
+
 .mq-math-mode .mq-font * {
   font-family: inherit;
   font-style: inherit;
@@ -152,7 +163,7 @@
 .mq-text-style var {
   font-style: normal;
 }
-.mq-math-mode var.mq-f {
+.mq-default-style .mq-math-mode var.mq-f {
   margin-right: 0.2em;
   margin-left: 0.1em;
 }
@@ -366,10 +377,15 @@
   /* take out of normal flow to manipulate baseline */
   width: 100%;
 }
-.mq-math-mode,
-.mq-math-mode .mq-editable-field {
+.mq-default-style .mq-math-mode,
+.mq-default-style .mq-math-mode .mq-editable-field {
   cursor: text;
   font-family: Symbola, 'Times New Roman', serif;
+}
+.mq-text-style .mq-math-mode,
+.mq-text-style .mq-math-mode .mq-editable-field {
+  cursor: text;
+  font-family: 'Arial', 'sans-serif', 'serif';
 }
 .mq-math-mode .mq-overarc {
   border-top: 1px solid black;
