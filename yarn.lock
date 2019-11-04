@@ -4569,6 +4569,11 @@ react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.11.0.tgz#b85dfecd48ad1ce469ff558a882ca8e8313928fa"
   integrity sha512-gbBVYR2p8mnriqAwWx9LbuUrShnAuSCNnuPGyc7GJrMVQtPDAh8iLpv7FRuMPFb56KkaVZIYSz1PrjI9q0QPCw==
 
+react-simple-keyboard@^2.0.27:
+  version "2.0.27"
+  resolved "https://registry.yarnpkg.com/react-simple-keyboard/-/react-simple-keyboard-2.0.27.tgz#da0eee6dca59e2087abac60c8fe04d82ccb57a7e"
+  integrity sha512-omdcEmN7BVEud4lyHSlbIrqWw3lqfMr8deooNFZlz/IkA18d0wi+yVNregukGKj5lw7gdUYDGGO8mbH+mldd8w==
+
 react@16.11.0:
   version "16.11.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.11.0.tgz#d294545fe62299ccee83363599bf904e4a07fdbb"
@@ -4896,11 +4901,6 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
   integrity sha1-tf3AjxKH6hF4Yo5BXiUTK3NkbG0=
-
-simple-keyboard@^2.26.19:
-  version "2.26.19"
-  resolved "https://registry.yarnpkg.com/simple-keyboard/-/simple-keyboard-2.26.19.tgz#3cac86ca5c58e4cbfcb9682431c47ab58940d7d5"
-  integrity sha512-+aOUiEbrDJvoFhtmpdo8QfpX1bjPlLWsLGuW3TLuadHAveFE1QB76GFtH7uCSxHzx2fJwGz49YSEdf/LglJdGQ==
 
 snapdragon-node@^2.0.1:
   version "2.1.1"
