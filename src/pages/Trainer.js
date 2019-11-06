@@ -1,8 +1,7 @@
-import React from 'react'
-import { TextInput } from './input'
-import { McInput } from './mc-input'
+import { McInput } from '../input/mc-input'
+import { TextInput } from '../input/text-input'
 
-export const Page = () => {
+export const Trainer = () => {
   return (
     <>
       <div className="container">

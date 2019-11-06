@@ -1,4 +1,4 @@
-import { OSIContext } from './osi'
+import { OSIContext } from '../osi'
 
 export const McInput = props => {
   const context = React.useContext(OSIContext)

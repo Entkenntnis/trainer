@@ -1,9 +1,9 @@
 import dynamic from 'next/dynamic'
-import { OSIContext } from './osi'
+import { OSIContext } from '../osi'
 
 import 'react-simple-keyboard/build/css/index.css'
 
-const MathQuillComponent = dynamic(() => import('./react-mathquill'), {
+const MathQuillComponent = dynamic(() => import('../react-mathquill'), {
   ssr: false
 })
 
