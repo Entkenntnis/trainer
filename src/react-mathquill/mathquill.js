@@ -5161,9 +5161,11 @@ var Equality = P(BinaryOperator, function(_, super_) {
   };
   _.createLeftOf = function(cursor) {
     if (cursor[L] instanceof Inequality && cursor[L].strict) {
-      cursor[L].swap(false);
-      cursor[L].bubble('reflow');
-      return;
+      if (!cursor.options.ignoreEq) {
+        cursor[L].swap(false);
+        cursor[L].bubble('reflow');
+        return;
+      }
     }
     super_.createLeftOf.apply(this, arguments);
   };

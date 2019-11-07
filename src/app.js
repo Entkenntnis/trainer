@@ -4,7 +4,7 @@ import * as Pages from './pages'
 import { addOSI } from './osi'
 import { Loader } from './loader'
 
-const WrappedPage = addOSI(Pages.Example2)
+const WrappedPage = addOSI(Pages.Example3)
 
 const App = () => {
   const [loaded, setLoaded] = React.useState(false)

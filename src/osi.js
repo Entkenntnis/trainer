@@ -16,14 +16,28 @@ export function addOSI(child) {
   let currentElement = null
   const osiUpdate = { current: null }
 
-  function addElement(params) {
+  function addElement(params, options) {
     const key = counter++
-    elements.push({
+    const element = {
       key,
       domElement: params.domElement ? params.domElement : () => {},
       focus: params.focus ? params.focus : () => {},
       reactComponent: params.reactComponent ? params.reactComponent : null
-    })
+    }
+    elements.push(element)
+    function autoFocus() {
+      if (currentElement == null && element.domElement()) {
+        if (osiUpdate.current) osiUpdate.current.update(element.reactComponent)
+        setTimeout(() => element.focus())
+      } else {
+        if (currentElement == null) {
+          setTimeout(autoFocus, 50)
+        }
+      }
+    }
+    if (options && options.autoFocus) {
+      autoFocus()
+    }
     return key
   }
 
@@ -36,6 +50,7 @@ export function addOSI(child) {
   }
 
   function handleFocus(event) {
+    console.log('handle focus')
     const target = event.target
     for (const element of elements) {
       if (element.domElement().contains(target)) {

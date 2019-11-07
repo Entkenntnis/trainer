@@ -18,13 +18,23 @@ export const TextInput = React.forwardRef((props, ref) => {
 
   React.useEffect(() => {
     console.log('textinput mounted')
-    const key = context.addElement({
-      focus: () => {
-        if (mathquill.current) mathquill.current.focus()
+    const key = context.addElement(
+      {
+        focus: () => {
+          if (mathquill.current) mathquill.current.focus()
+        },
+        reactComponent: (
+          <TextKeyboard
+            inputElement={mathquill}
+            onSubmit={val => {
+              if (props.onSubmit) props.onSubmit(mathquill.current.latex())
+            }}
+          />
+        ),
+        domElement: () => mathquill.current && mathquill.current.el()
       },
-      reactComponent: <TextKeyboard inputElement={mathquill} />,
-      domElement: () => mathquill.current && mathquill.current.el()
-    })
+      { autoFocus: props.autoFocus }
+    )
 
     return () => {
       console.log('textinput unmounted')
@@ -48,7 +58,11 @@ export const TextInput = React.forwardRef((props, ref) => {
             return element
           },
           supSubsRequireOperand: true,
-          handlers: {}
+          handlers: {},
+          ignoreEq: true
+        }}
+        onChange={() => {
+          console.log(mathquill.current.latex())
         }}
       ></MathQuillComponent>
     </div>
@@ -59,19 +73,19 @@ const layouts = {
   default: [
     'q w e r t z u i o p ü',
     'a s d f g h j k l ö ä',
-    '{shift} y x c v b n m {bksp}',
+    '{shift} ß y x c v b n m {bksp}',
     '123 {space} submit'
   ],
   shift: [
     'Q W E R T Z U I O P Ü',
     'A S D F G H J K L Ö Ä',
-    '{shifted} Y X C V B N M {bksp}',
+    '{shifted} ß Y X C V B N M {bksp}',
     '123 {space} submit'
   ],
   sym: [
     '1 2 3 4 5 6 7 8 9 0',
-    "ß @ + = - ' / ^ {mixed} ( )",
-    ', . : ! ? [ ] { } {bksp}',
+    ". ? ! ' , : ; @ # ( )",
+    '+ - = < > [ ] " {bksp}',
     'ABC {space} submit'
   ]
 }
@@ -80,11 +94,8 @@ const displays = {
   '{bksp}': '◄',
   '{shift}': '△',
   '{shifted}': '▲',
-  '{mixed}': 'x-x/x',
   submit: 'Weiter'
 }
-
-let counter = 0
 
 export const TextKeyboard = props => {
   console.log('render keyboard')
@@ -100,18 +111,15 @@ export const TextKeyboard = props => {
   const [layout, setLayout] = React.useState('default')
 
   const onKeyPress = React.useMemo(() => {
-    let key = counter++
     onKeyPressVersion.current++
-    console.log('create on key press ' + key)
     return button => {
       if (props.inputElement.current) {
-        console.log('keypress: ' + key)
         if (button.length == 1) {
-          if (
+          /*if (
             (button == '/' || button == '^') &&
             props.inputElement.current.cursorDepth() > 1
           )
-            return
+            return*/
           if ('()[]'.includes(button)) {
             props.inputElement.current.write(button)
           } else {
@@ -130,11 +138,17 @@ export const TextKeyboard = props => {
           setTimeout(() => setLayout('sym'))
         } else if (button == 'ABC') {
           setTimeout(() => setLayout('default'))
-        } else if (button == '{mixed}') {
+        } /*else if (button == '{mixed}') {
           if (props.inputElement.current.cursorDepth() <= 1) {
             props.inputElement.current.write('\\frac{}{}')
             props.inputElement.current.keystroke('Left')
             props.inputElement.current.keystroke('Left')
+          }
+        }*/ else if (
+          button == 'submit'
+        ) {
+          if (props.onSubmit) {
+            props.onSubmit()
           }
         } else {
           console.log(button)
