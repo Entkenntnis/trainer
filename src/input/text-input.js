@@ -14,10 +14,10 @@ const Keyboard = dynamic(() => import('react-simple-keyboard'), {
 export const TextInput = React.forwardRef((props, ref) => {
   const context = React.useContext(OSIContext)
   const mathquill = React.useRef()
-  console.log('render textinput')
+  //console.log('render textinput')
 
   React.useEffect(() => {
-    console.log('textinput mounted')
+    //console.log('textinput mounted')
     const key = context.addElement(
       {
         focus: () => {
@@ -37,7 +37,7 @@ export const TextInput = React.forwardRef((props, ref) => {
     )
 
     return () => {
-      console.log('textinput unmounted')
+      //console.log('textinput unmounted')
       context.removeElement(key)
     }
   }, [])
@@ -98,16 +98,16 @@ const displays = {
 }
 
 export const TextKeyboard = props => {
-  console.log('render keyboard')
+  //*console.log('render keyboard')
 
   const onKeyPressVersion = React.useRef(0)
 
-  React.useEffect(() => {
+  /*React.useEffect(() => {
     console.log('keyboard mounted')
     return () => {
       console.log('keyboard unmounted')
     }
-  }, [])
+  }, [])*/
   const [layout, setLayout] = React.useState('default')
 
   const onKeyPress = React.useMemo(() => {
@@ -155,8 +155,8 @@ export const TextKeyboard = props => {
         }
       }
     }
-  }, [props.inputElement])
-  console.log('current layout:', layout)
+  }, [props.inputElement, layout])
+  //console.log('current layout:', layout)
   return (
     <>
       <div className="my-keyboard">
@@ -190,6 +190,13 @@ export const TextKeyboard = props => {
         .my-keyboard :global(.simple-keyboard .hg-button span) {
           min-width: 0.5rem;
           text-align: center;
+        }
+        .my-keyboard :global(.simple-keyboard .hg-row .hg-button-container),
+        .my-keyboard :global(.simple-keyboard .hg-row .hg-button: not(: last-child)) {
+          margin-right: 3px;
+        }
+        .my-keyboard :global(.simple-keyboard.hg-theme-default .hg-button) {
+          height: 48px;
         }
       `}</style>
     </>

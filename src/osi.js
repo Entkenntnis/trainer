@@ -29,6 +29,7 @@ export function addOSI(child) {
       if (currentElement == null && element.domElement()) {
         if (osiUpdate.current) osiUpdate.current.update(element.reactComponent)
         setTimeout(() => element.focus())
+        currentElement = element
       } else {
         if (currentElement == null) {
           setTimeout(autoFocus, 50)
@@ -50,7 +51,7 @@ export function addOSI(child) {
   }
 
   function handleFocus(event) {
-    console.log('handle focus')
+    //console.log('handle focus')
     const target = event.target
     for (const element of elements) {
       if (element.domElement().contains(target)) {

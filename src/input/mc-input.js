@@ -10,7 +10,6 @@ export const McInput = props => {
     elKey.current = context.addElement({
       domElement: () => span.current,
       focus: () => {
-        console.log('focus')
         if (span.current) span.current.focus()
       },
       reactComponent: (
