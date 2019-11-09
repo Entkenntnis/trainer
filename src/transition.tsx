@@ -5,7 +5,7 @@ function warnOutOfContext() {
   console.warn('TransitionContext called outside of provider!')
 }
 
-export const TransitionContext = React.createContext({
+export const TransitionContext = React.createContext<any>({
   hide: warnOutOfContext,
   show: warnOutOfContext,
   setMode: warnOutOfContext
@@ -46,7 +46,6 @@ export function addTransition(child) {
         })
       })
     }, [])
-    window.tc = transitionCommands
     return (
       <>
         <div className="fixed-container">

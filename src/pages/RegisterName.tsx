@@ -1,4 +1,5 @@
 import { TextInput } from '../input/text-input'
+import React from 'react'
 
 export const RegisterName = props => {
   const inputRef = React.useRef()

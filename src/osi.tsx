@@ -5,7 +5,7 @@ function warnOutOfContext() {
   console.warn('OSI Contexts called outside of context provider!')
 }
 
-export const OSIContext = React.createContext({
+export const OSIContext = React.createContext<any>({
   addElement: warnOutOfContext,
   removeElement: warnOutOfContext
 })

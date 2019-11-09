@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic'
 import { OSIContext } from '../osi'
+import React from 'react'
 
 import 'react-simple-keyboard/build/css/index.css'
 
@@ -11,9 +12,9 @@ const Keyboard = dynamic(() => import('react-simple-keyboard'), {
   ssr: false
 })
 
-export const TextInput = React.forwardRef((props, ref) => {
+export const TextInput = React.forwardRef((props: any, ref: any) => {
   const context = React.useContext(OSIContext)
-  const mathquill = React.useRef()
+  const mathquill: any = React.useRef()
   //console.log('render textinput')
 
   React.useEffect(() => {
@@ -169,9 +170,11 @@ export const TextKeyboard = props => {
           onKeyPress={onKeyPress}
           layoutName={layout}
           mergeDisplay
-          display={displays}
+          display={{
+            dummyProp: onKeyPressVersion.current.toString(),
+            ...displays
+          }}
           layout={layouts}
-          dummyProp={onKeyPressVersion.current}
         ></Keyboard>
       </div>
       <style jsx>{`

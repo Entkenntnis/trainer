@@ -1,3 +1,5 @@
+import React from 'react'
+
 export const RegisterColor = props => {
   const [color, setColor] = React.useState(() => {
     const row = Math.floor(Math.random() * props.colors.length)
