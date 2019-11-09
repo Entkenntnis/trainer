@@ -65,7 +65,9 @@ export function addOSI(child) {
       }
     }
     if (currentElement) {
-      setTimeout(() => currentElement.focus())
+      setTimeout(() => {
+        if (currentElement) currentElement.focus()
+      })
     }
   }
 

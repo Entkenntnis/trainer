@@ -2,26 +2,19 @@ import React from 'react'
 import Head from 'next/head'
 import * as Pages from './pages'
 import { addOSI } from './osi'
-import { Loader } from './loader'
+import { addLoader } from './loader'
+import { addTransition } from './transition'
 
-const WrappedPage = addOSI(Pages.Example4)
+const WrappedPage = addLoader(addTransition(addOSI(Pages.Host)))
 
 const App = () => {
-  const [loaded, setLoaded] = React.useState(false)
-  React.useEffect(() => setLoaded(true), [])
   return (
     <>
       <Head>
         <title>Trainer</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {loaded && <WrappedPage />}
-      <Loader />
-      <style jsx global>{`
-        body {
-          margin: 0;
-        }
-      `}</style>
+      <WrappedPage />
     </>
   )
 }

@@ -31,6 +31,7 @@ export const RegisterName = props => {
                   }
                 }}
                 ref={inputRef}
+                defaultValue={props.defaultValue}
               />
             </div>
           </div>

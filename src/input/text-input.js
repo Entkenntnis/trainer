@@ -27,7 +27,8 @@ export const TextInput = React.forwardRef((props, ref) => {
           <TextKeyboard
             inputElement={mathquill}
             onSubmit={val => {
-              if (props.onSubmit) props.onSubmit(mathquill.current.latex())
+              if (props.onSubmit)
+                props.onSubmit(mathquill.current.latex().replace(/\\ /g, ' '))
             }}
           />
         ),
@@ -49,6 +50,9 @@ export const TextInput = React.forwardRef((props, ref) => {
           mathquill.current = mq
           //context.addFocusable({ current: mq })
         }}
+        latex={
+          props.defaultValue ? props.defaultValue.replace(/ /g, '\\ ') : ''
+        }
         config={{
           substituteTextarea: () => {
             const element = document.createElement('span')
@@ -73,27 +77,27 @@ const layouts = {
   default: [
     'q w e r t z u i o p ü',
     'a s d f g h j k l ö ä',
-    '{shift} ß y x c v b n m {bksp}',
+    'shift ß y x c v b n m bksp',
     '123 {space} submit'
   ],
   shift: [
     'Q W E R T Z U I O P Ü',
     'A S D F G H J K L Ö Ä',
-    '{shifted} ß Y X C V B N M {bksp}',
+    'shifted ß Y X C V B N M bksp',
     '123 {space} submit'
   ],
   sym: [
     '1 2 3 4 5 6 7 8 9 0',
     ". ? ! ' , : ; @ # ( )",
-    '+ - = < > [ ] " {bksp}',
+    '+ - = < > [ ] " bksp',
     'ABC {space} submit'
   ]
 }
 
 const displays = {
-  '{bksp}': '◄',
-  '{shift}': '△',
-  '{shifted}': '▲',
+  bksp: '◄',
+  shift: '△',
+  shifted: '▲',
   submit: 'Weiter'
 }
 
@@ -126,13 +130,13 @@ export const TextKeyboard = props => {
             props.inputElement.current.typedText(button)
           }
           if (layout == 'shift') setTimeout(() => setLayout('default'))
-        } else if (button == '{bksp}') {
+        } else if (button == 'bksp') {
           props.inputElement.current.keystroke('Backspace')
         } else if (button == '{space}') {
           props.inputElement.current.typedText(' ')
-        } else if (button == '{shift}') {
+        } else if (button == 'shift') {
           setTimeout(() => setLayout('shift'))
-        } else if (button == '{shifted}') {
+        } else if (button == 'shifted') {
           setTimeout(() => setLayout('default'))
         } else if (button == '123') {
           setTimeout(() => setLayout('sym'))
@@ -175,6 +179,23 @@ export const TextKeyboard = props => {
           :global(.simple-keyboard.hg-theme-default
             .hg-button.hg-standardBtn[data-skbtn='123']) {
           max-width: 80px;
+        }
+        .my-keyboard
+          :global(.simple-keyboard.hg-theme-default
+            .hg-button.hg-standardBtn[data-skbtn='shift']) {
+          min-width: 45px;
+          font-size: 1.5em;
+        }
+        .my-keyboard
+          :global(.simple-keyboard.hg-theme-default
+            .hg-button.hg-standardBtn[data-skbtn='shifted']) {
+          min-width: 45px;
+          font-size: 1.5em;
+        }
+        .my-keyboard
+          :global(.simple-keyboard.hg-theme-default
+            .hg-button.hg-standardBtn[data-skbtn='bksp']) {
+          min-width: 45px;
         }
         .my-keyboard
           :global(.simple-keyboard.hg-theme-default
