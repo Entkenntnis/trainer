@@ -3,6 +3,7 @@ import React from 'react'
 import { StartScreen } from './StartScreen'
 import { Trainer } from './Trainer'
 import { RegisterName } from './RegisterName'
+import { RegisterColor } from './RegisterColor'
 
 // https://www.colorcodehex.com/color-scheme/1014183.html
 
@@ -26,4 +27,17 @@ export const Example2 = () => {
 
 export const Example3 = () => {
   return <RegisterName onAction={(action, arg) => console.log(action, arg)} />
+}
+export const Example4 = () => {
+  return (
+    <RegisterColor
+      onAction={(action, arg) => console.log(action, arg)}
+      colors={[
+        ['LightCoral', 'Crimson', 'Red', 'HotPink '],
+        ['OrangeRed', 'Orange', 'LemonChiffon', 'DarkKhaki'],
+        ['Plum', 'MediumOrchid', 'Indigo', 'LawnGreen'],
+        ['DarkGreen', 'Teal', 'Turquoise', 'SaddleBrown']
+      ]}
+    />
+  )
 }
