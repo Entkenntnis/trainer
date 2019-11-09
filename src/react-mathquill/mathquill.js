@@ -3907,7 +3907,6 @@ CharCmds['/'] = P(Fraction, function(_, super_) {
   _.createLeftOf = function(cursor) {
     if (!this.replacedFragment) {
       var leftward = cursor[L];
-      console.log('leftward', leftward.ctrlSeq)
       while (leftward &&
         !(
           leftward instanceof BinaryOperator ||
@@ -4696,6 +4695,7 @@ var Variable = P(Symbol, function(_, super_) {
 
 Options.p.autoCommands = { _maxLength: 0 };
 optionProcessors.autoCommands = function(cmds) {
+  if (!cmds) return {}
   if (!/^[a-z]+(?: [a-z]+)*$/i.test(cmds)) {
     throw '"'+cmds+'" not a space-delimited list of only letters';
   }
@@ -4850,6 +4850,7 @@ var TwoWordOpNames = { limsup: 1, liminf: 1, projlim: 1, injlim: 1 };
   }
 }());
 optionProcessors.autoOperatorNames = function(cmds) {
+  if (!cmds) return {}
   if (!/^[a-z]+(?: [a-z]+)*$/i.test(cmds)) {
     throw '"'+cmds+'" not a space-delimited list of only letters';
   }

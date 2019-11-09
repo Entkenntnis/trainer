@@ -64,10 +64,9 @@ export const TextInput = React.forwardRef((props: any, ref: any) => {
           },
           supSubsRequireOperand: true,
           handlers: {},
+          autoCommands: '',
+          autoOperatorNames: '',
           ignoreEq: true
-        }}
-        onChange={() => {
-          console.log(mathquill.current.latex())
         }}
       ></MathQuillComponent>
     </div>

@@ -25,10 +25,16 @@ export const RegisterName = props => {
               <TextInput
                 autoFocus
                 onSubmit={val => {
-                  if (!val) {
+                  if (!val.trim()) {
                     setTimeout(() => alert('Bitte Namen eingeben!'))
                   } else {
-                    props.onAction('submit', val)
+                    if (val.length > 30) {
+                      setTimeout(() =>
+                        alert('Name ist zu lang, maximal 30 Zeichen!')
+                      )
+                    } else {
+                      props.onAction('submit', val)
+                    }
                   }
                 }}
                 ref={inputRef}
