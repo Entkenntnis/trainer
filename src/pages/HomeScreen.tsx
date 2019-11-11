@@ -1,57 +1,148 @@
 export const HomeScreen = props => {
   return (
     <>
-      <div className="stuff">
-        Hallo {props.username}
-        <span style={{ color: props.color }}>●</span>!
-        <br />
-      </div>
-      <div className="tools">
-        <a onClick={() => props.onAction('delete')}>Benutzer löschen</a>
-        <br />
-        <br />
-        <br />
-        <a onClick={() => props.onAction('logout')}>
-          Abmelden / Benutzer wechseln
-        </a>
-        <br />
-        <br />
-        <br />
-        <a
-          onClick={() => {
-            const main: any = document.documentElement
-            if (main.requestFullscreen) {
-              main.requestFullscreen()
-            }
-            if (main.mozRequestFullscreen) {
-              main.mozRequestFullscreen
-            }
-            if (main.webkitRequestFullscreen) {
-              main.webkitRequestFullscreen
-            }
-            if (main.msRequestFullscreen) {
-              main.msRequestFullscreen
-            }
-          }}
-        >
-          Vollbild
-        </a>
+      <div className="container">
+        <div className="statusbar">
+          <span style={{ color: props.color }}>●</span>
+          <span className="username">{props.username}</span>
+          <div className="spacer"></div>
+          <span className="settings">
+            <a onClick={() => props.onAction('settings')}>Einstellungen</a>
+          </span>
+        </div>
+        <div className="heading">
+          <span>
+            <b>{props.heading}</b>
+          </span>
+        </div>
+
+        <div className="content">
+          <div className="content-list">
+            {props.content.map(block => (
+              <div className="content-block" key={block.heading}>
+                <div className="content-block-heading">{block.heading}</div>
+                {block.topics.map(topic => (
+                  <div
+                    key={topic.title}
+                    className="content-block-topic"
+                    onClick={() => {
+                      props.onAction('select', topic.title)
+                    }}
+                  >
+                    <img className="content-block-image" src={topic.image} />
+                    <div className="content-block-topic-title">
+                      {topic.title}
+                    </div>
+                    <div className="spacer"></div>
+                    {topic.progress.length > 0 && (
+                      <div className="progress">
+                        {topic.progress.map((p, i) => (
+                          <div
+                            key={i}
+                            className="progress-item"
+                            style={{
+                              backgroundColor: p.color,
+                              width: p.percent + '%'
+                            }}
+                          ></div>
+                        ))}
+                      </div>
+                    )}
+                    <div className="forward">&gt;</div>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
       <style jsx>{`
-        .stuff {
-          text-align: center;
+        .container {
+          display: flex;
+          flex-direction: column;
           font-family: 'Arial';
-          font-size: 2em;
-          margin: 2em 1em;
+          position: absolute;
+          height: 100%;
+          width: 100%;
         }
-        .tools {
-          font-family: 'Arial';
-          text-align: center;
-          color: darkblue;
+        .statusbar {
+          border-bottom: 1px grey solid;
+          padding: 0.2em;
+          display: flex;
+          flex-direction: row;
+          align-items: baseline;
         }
-        .tools a {
-          cursor: pointer;
+        .username {
+          padding-left: 0.4em;
+        }
+        .spacer {
+          flex-grow: 1;
+        }
+        .settings a {
+          color: #26447b;
           text-decoration: underline;
+          cursor: pointer;
+        }
+        .heading {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          padding: 0.6em;
+          border-bottom: 1px grey solid;
+          background-color: #d6e4f0;
+        }
+        .content {
+          overflow-y: auto;
+          flex-grow: 1;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+        }
+        .content-list {
+          width: 550px;
+          flex-grow: 0;
+          flex-shrink: 1;
+        }
+        .content-block {
+          border-left: 1px solid grey;
+          border-right: 1px solid grey;
+        }
+        .content-block-heading {
+          padding-top: 0.6em;
+          padding-left: 0.4em;
+          padding-bottom: 0.2em;
+          border-bottom: 1px grey solid;
+        }
+        .content-block-topic {
+          border-bottom: 1px grey solid;
+          height: 4em;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          cursor: pointer;
+        }
+        .content-block-image {
+          height: 3.5em;
+          margin-left: 0.5em;
+        }
+        .content-block-topic-title {
+          margin-left: 1.4em;
+        }
+        .forward {
+          padding: 0.4em;
+        }
+        .progress {
+          display: flex;
+          flex-direction: column;
+          height: 3em;
+          width: 1.3em;
+          background-color: lightgrey;
+          border-top: 1px solid #050;
+          margin-right: 0.5em;
+        }
+        .progress-item {
+          flex-grow: 1;
+          border-bottom: 1px solid #005000;
         }
       `}</style>
     </>

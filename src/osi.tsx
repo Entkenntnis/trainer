@@ -113,6 +113,7 @@ export function addOSI(child) {
           }
           .child {
             flex-grow: 1;
+            position: relative;
           }
         `}</style>
       </>

@@ -7,6 +7,8 @@ import { RegisterColor } from './RegisterColor'
 import { HomeScreen } from './HomeScreen'
 
 import { TransitionContext } from '../transition'
+import { Settings } from './Settings'
+import { Content } from '../content'
 
 // https://www.colorcodehex.com/color-scheme/1014183.html
 
@@ -94,6 +96,26 @@ export const Host = props => {
       <HomeScreen
         username={database.current.currentUser.username}
         color={database.current.currentUser.color}
+        content={Content}
+        heading="Themenübersicht"
+        onAction={(action, arg) => {
+          console.log(action, arg)
+          if (action == 'settings') {
+            transition.setMode('forward')
+            transition.hide(() => {
+              setPage('Settings')
+              transition.show()
+            })
+          }
+        }}
+      />
+    )
+  }
+  if (page == 'Settings') {
+    return (
+      <Settings
+        username={database.current.currentUser.username}
+        color={database.current.currentUser.color}
         onAction={(action, arg) => {
           console.log(action, arg)
           if (action == 'logout') {
@@ -110,6 +132,28 @@ export const Host = props => {
               setPage('StartScreen')
               transition.show()
             })
+          }
+          if (action == 'exit') {
+            transition.setMode('backward')
+            transition.hide(() => {
+              setPage('HomeScreen')
+              transition.show()
+            })
+          }
+          if (action == 'fullscreen') {
+            const main: any = document.documentElement
+            if (main.requestFullscreen) {
+              main.requestFullscreen()
+            }
+            if (main.mozRequestFullscreen) {
+              main.mozRequestFullscreen
+            }
+            if (main.webkitRequestFullscreen) {
+              main.webkitRequestFullscreen
+            }
+            if (main.msRequestFullscreen) {
+              main.msRequestFullscreen
+            }
           }
         }}
       />
@@ -221,10 +265,13 @@ export const Example5 = () => {
     <HomeScreen
       username="Max"
       color="SaddleBrown"
+      heading="Themenübersicht"
+      content={Content}
       onAction={(action, arg) => console.log(action, arg)}
     />
   )
 }
+
 export const Example6 = () => {
   console.log('render example 6')
   React.useEffect(() => {
@@ -235,5 +282,15 @@ export const Example6 = () => {
     <div>
       <RegisterName onAction={(action, arg) => console.log(action, arg)} />
     </div>
+  )
+}
+
+export const Example7 = () => {
+  return (
+    <Settings
+      username="Max"
+      color="SaddleBrown"
+      onAction={(action, arg) => console.log(action, arg)}
+    />
   )
 }

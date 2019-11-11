@@ -95,7 +95,7 @@ const layouts = {
 }
 
 const displays = {
-  bksp: '◄',
+  bksp: '⌫',
   shift: '△',
   shifted: '▲',
   submit: 'Weiter'
