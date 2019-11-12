@@ -1,59 +1,51 @@
-export const HomeScreen = props => {
+export const TopicScreen = props => {
   return (
     <>
       <div className="container">
         <div className="statusbar">
-          <span style={{ color: props.color }}>●</span>
-          <span className="username">{props.username}</span>
-          <div className="spacer"></div>
-          <span className="settings">
-            <a onClick={() => props.onAction('settings')}>Einstellungen</a>
+          <span className="back-to-home" onClick={() => props.onAction('back')}>
+            &lt; Themenübersicht
           </span>
+          <div className="spacer"></div>
         </div>
         <div className="heading">
           <span>
-            <b>{props.heading}</b>
+            <b>{props.title}</b>
           </span>
         </div>
 
         <div className="content">
           <div className="content-list">
-            {props.content.map(block => (
-              <div className="content-block" key={block.heading}>
-                <div className="content-block-heading">{block.heading}</div>
-                {block.topics.map(topic => (
+            <div className="topic-image">
+              <img src={props.image} />
+            </div>
+
+            <div className="content-block">
+              {props.list &&
+                props.list.map(item => (
                   <div
-                    key={topic.title}
+                    key={item.title}
                     className="content-block-topic"
                     onClick={() => {
-                      props.onAction('select', topic.title)
+                      props.onAction('select', item.title)
                     }}
                   >
-                    <img className="content-block-image" src={topic.image} />
                     <div className="content-block-topic-title">
-                      {topic.title}
+                      {item.title}
                     </div>
                     <div className="spacer"></div>
-                    {topic.items.length > 0 &&
-                      topic.items.some(item => item.progress > 0) && (
-                        <div className="progress">
-                          {topic.items.map((p, i) => (
-                            <div
-                              key={i}
-                              className="progress-item"
-                              style={{
-                                backgroundColor: p.color,
-                                width: p.progress + '%'
-                              }}
-                            ></div>
-                          ))}
-                        </div>
-                      )}
+                    {item.progress > 0 && (
+                      <div
+                        className="progress"
+                        style={{ backgroundColor: item.color }}
+                      >
+                        {item.progress + '%'}
+                      </div>
+                    )}
                     <div className="forward">&gt;</div>
                   </div>
                 ))}
-              </div>
-            ))}
+            </div>
           </div>
         </div>
       </div>
@@ -73,8 +65,12 @@ export const HomeScreen = props => {
           flex-direction: row;
           align-items: baseline;
         }
-        .username {
+        .back-to-home {
           padding-left: 0.4em;
+          cursor: pointer;
+        }
+        .back-to-home:active {
+          background-color: lightgrey;
         }
         .spacer {
           flex-grow: 1;
@@ -83,9 +79,6 @@ export const HomeScreen = props => {
           color: #26447b;
           text-decoration: underline;
           cursor: pointer;
-        }
-        .settings a:active {
-          background-color: lightgrey;
         }
         .heading {
           display: flex;
@@ -107,15 +100,22 @@ export const HomeScreen = props => {
           flex-grow: 0;
           flex-shrink: 1;
         }
+        .topic-image {
+          padding: 2em 0;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          border-bottom: 1px grey solid;
+          border-left: 1px grey solid;
+          border-right: 1px grey solid;
+        }
+        .topic-image img {
+          height: 5em;
+          width: 5em;
+        }
         .content-block {
           border-left: 1px solid grey;
           border-right: 1px solid grey;
-        }
-        .content-block-heading {
-          padding-top: 0.6em;
-          padding-left: 0.4em;
-          padding-bottom: 0.2em;
-          border-bottom: 1px grey solid;
         }
         .content-block-topic {
           border-bottom: 1px grey solid;
@@ -125,28 +125,17 @@ export const HomeScreen = props => {
           align-items: center;
           cursor: pointer;
         }
-        .content-block-image {
-          height: 3.5em;
-          margin-left: 0.5em;
-        }
         .content-block-topic-title {
-          margin-left: 1.4em;
+          margin-left: 0.6em;
         }
         .forward {
           padding: 0.4em;
         }
         .progress {
-          display: flex;
-          flex-direction: column;
-          height: 3em;
-          width: 1.3em;
-          background-color: lightgrey;
-          border-top: 1px solid #050;
-          margin-right: 0.5em;
-        }
-        .progress-item {
-          flex-grow: 1;
-          border-bottom: 1px solid #005000;
+          font-size: 0.8em;
+          color: white;
+          padding: 0.1em;
+          border-radius: 2px;
         }
       `}</style>
     </>

@@ -1,42 +1,81 @@
-export const Content = [
+export const Content: any = [
   {
     heading: 'Mathematik 5. Klasse',
     topics: [
       {
         image: 'N.png',
         title: 'Negative Zahlen',
-        progress: [
+        items: [
           {
-            color: '#0F8',
-            percent: 80
+            title: 'Negative Zahlen kennenlernen',
+            progress: 40,
+            color: '#0F8'
           },
           {
-            color: '#0F8',
-            percent: 90
+            title: 'Mit negativen Zahlen rechnen',
+            progress: 0,
+            color: '#0F8'
           },
           {
-            color: '#0F8',
-            percent: 80
+            title: 'Rechenregeln für die Addition',
+            progress: 0,
+            color: '#0F8'
           },
           {
-            color: '#0F8',
-            percent: 80
+            title: 'Addition (1)',
+            progress: 0,
+            color: '#0F8'
           },
           {
-            color: '#FF5',
-            percent: 100
+            title: 'Addition (2)',
+            progress: 0,
+            color: '#0F8'
+          },
+          {
+            title: 'Addition (3)',
+            progress: 0,
+            color: '#0F8'
+          },
+          {
+            title: 'Addition (4)',
+            progress: 0,
+            color: '#0F8'
+          },
+          {
+            title: 'Subtraktion (1)',
+            progress: 0,
+            color: '#0F8'
+          },
+          {
+            title: 'Subtraktion (2)',
+            progress: 0
+          },
+          {
+            title: 'Subtraktion (3)',
+            progress: 0,
+            color: '#0F8'
+          },
+          {
+            title: 'Subtraktion (4)',
+            progress: 0,
+            color: '#0F8'
+          },
+          {
+            title: 'Abschlusstest',
+            progress: 0,
+            color: '#FF5'
           }
         ]
       },
       {
         image: 'L.png',
         title: 'Längeneinheiten',
-        progress: []
+        items: []
       },
       {
         image: 'G.png',
         title: 'Große Zahlen',
-        progress: []
+        items: []
       }
     ]
   },
@@ -46,38 +85,17 @@ export const Content = [
       {
         image: 'G.png',
         title: 'Einstieg Bruchrechnung',
-        progress: []
+        items: []
       },
       {
         image: 'L.png',
         title: 'Koordinatensystem',
-        progress: []
+        items: []
       },
       {
         image: 'N.png',
         title: 'Zahlenrätsel',
-        progress: [
-          {
-            color: '#0F8',
-            percent: 60
-          },
-          {
-            color: '#0F8',
-            percent: 90
-          },
-          {
-            color: '#0F8',
-            percent: 100
-          },
-          {
-            color: '#0F8',
-            percent: 95
-          },
-          {
-            color: '#FF5',
-            percent: 87
-          }
-        ]
+        items: []
       }
     ]
   },
@@ -87,17 +105,17 @@ export const Content = [
       {
         image: 'N.png',
         title: 'Einstieg Gleichungen lösen',
-        progress: []
+        items: []
       },
       {
         image: 'L.png',
         title: 'Konstruktion mit Zirkel und Lineal',
-        progress: []
+        items: []
       },
       {
         image: 'N.png',
         title: 'Sachaufgaben zu Termen',
-        progress: []
+        items: []
       }
     ]
   }

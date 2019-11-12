@@ -13,8 +13,8 @@ export const TransitionContext = React.createContext<any>({
 
 export function addTransition(child) {
   const timeouts = {
-    forward: { enter: 200, exit: 50 },
-    backward: { enter: 50, exit: 200 },
+    forward: { enter: 200, exit: 0 },
+    backward: { enter: 0, exit: 200 },
     none: { enter: 0, exit: 0 }
   }
 

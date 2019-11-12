@@ -57,7 +57,12 @@ export const Settings = props => {
         }
         .exit {
           cursor: pointer;
-          padding-right: 0.35em;
+          padding-right: 0.8em;
+          padding-left: 0.35em;
+          padding-top: 0.1em;
+        }
+        .exit:active {
+          background-color: lightgrey;
         }
         .name {
           text-align: center;

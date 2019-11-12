@@ -9,6 +9,7 @@ import { HomeScreen } from './HomeScreen'
 import { TransitionContext } from '../transition'
 import { Settings } from './Settings'
 import { Content } from '../content'
+import { TopicScreen } from './TopicScreen'
 
 // https://www.colorcodehex.com/color-scheme/1014183.html
 
@@ -63,6 +64,7 @@ export const Host = props => {
   const transition = React.useContext(TransitionContext)
   const database = React.useRef(new Database())
   const [page, setPage] = React.useState('StartScreen')
+  const [topic, setTopic] = React.useState(null)
   if (page == 'StartScreen') {
     const users = database.current.getAllUsers()
     return (
@@ -107,9 +109,46 @@ export const Host = props => {
               transition.show()
             })
           }
+          if (action == 'select') {
+            transition.setMode('forward')
+            transition.hide(() => {
+              setPage('TopicScreen')
+              setTopic(arg)
+              transition.show()
+            })
+          }
         }}
       />
     )
+  }
+  if (page == 'TopicScreen' && topic) {
+    let tt = null
+    Content.map(block => {
+      block.topics.map(t => {
+        if (t.title == topic) tt = t
+      })
+    })
+    if (tt) {
+      return (
+        <TopicScreen
+          title={tt.title}
+          image={tt.image}
+          list={tt.items}
+          onAction={(action, arg) => {
+            console.log(action, arg)
+            if (action == 'back') {
+              transition.setMode('backward')
+              transition.hide(() => {
+                setPage('HomeScreen')
+                transition.show()
+              })
+            }
+          }}
+        />
+      )
+    } else {
+      setPage('HomeScreen')
+    }
   }
   if (page == 'Settings') {
     return (
@@ -290,6 +329,17 @@ export const Example7 = () => {
     <Settings
       username="Max"
       color="SaddleBrown"
+      onAction={(action, arg) => console.log(action, arg)}
+    />
+  )
+}
+
+export const Example8 = () => {
+  return (
+    <TopicScreen
+      heading="Negative Zahlen"
+      image="N.png"
+      list={Content[0].topics[0].items}
       onAction={(action, arg) => console.log(action, arg)}
     />
   )
