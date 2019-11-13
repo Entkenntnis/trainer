@@ -22,29 +22,33 @@ export const TopicScreen = props => {
 
             <div className="content-block">
               {props.list &&
-                props.list.map(item => (
-                  <div
-                    key={item.title}
-                    className="content-block-topic"
-                    onClick={() => {
-                      props.onAction('select', item.title)
-                    }}
-                  >
-                    <div className="content-block-topic-title">
-                      {item.title}
-                    </div>
-                    <div className="spacer"></div>
-                    {item.progress > 0 && (
-                      <div
-                        className="progress"
-                        style={{ backgroundColor: item.color }}
-                      >
-                        {item.progress + '%'}
+                props.list.map(item => {
+                  const key = props.block.heading + props.title + item.title
+                  const progress = props.user.progress[key]
+                  return (
+                    <div
+                      key={item.title}
+                      className="content-block-topic"
+                      onClick={() => {
+                        props.onAction('select', item.title)
+                      }}
+                    >
+                      <div className="content-block-topic-title">
+                        {item.title}
                       </div>
-                    )}
-                    <div className="forward">&gt;</div>
-                  </div>
-                ))}
+                      <div className="spacer"></div>
+                      {progress > 0 && (
+                        <div
+                          className="progress"
+                          style={{ backgroundColor: item.color }}
+                        >
+                          {progress + '%'}
+                        </div>
+                      )}
+                      <div className="forward">&gt;</div>
+                    </div>
+                  )
+                })}
             </div>
           </div>
         </div>

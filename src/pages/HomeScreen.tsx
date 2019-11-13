@@ -3,8 +3,8 @@ export const HomeScreen = props => {
     <>
       <div className="container">
         <div className="statusbar">
-          <span style={{ color: props.color }}>●</span>
-          <span className="username">{props.username}</span>
+          <span style={{ color: props.user.color }}>●</span>
+          <span className="username">{props.user.username}</span>
           <div className="spacer"></div>
           <span className="settings">
             <a onClick={() => props.onAction('settings')}>Einstellungen</a>
@@ -35,15 +35,28 @@ export const HomeScreen = props => {
                     </div>
                     <div className="spacer"></div>
                     {topic.items.length > 0 &&
-                      topic.items.some(item => item.progress > 0) && (
+                      topic.items.some(item => {
+                        const p =
+                          props.user.progress[
+                            block.heading + topic.title + item.title
+                          ]
+                        return p && p > 0
+                      }) && (
                         <div className="progress">
-                          {topic.items.map((p, i) => (
+                          {topic.items.map((item, i) => (
                             <div
                               key={i}
                               className="progress-item"
                               style={{
-                                backgroundColor: p.color,
-                                width: p.progress + '%'
+                                backgroundColor: item.color,
+                                width:
+                                  (props.user.progress[
+                                    block.heading + topic.title + item.title
+                                  ]
+                                    ? props.user.progress[
+                                        block.heading + topic.title + item.title
+                                      ]
+                                    : '0') + '%'
                               }}
                             ></div>
                           ))}

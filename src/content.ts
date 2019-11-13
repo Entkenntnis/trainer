@@ -8,61 +8,50 @@ export const Content: any = [
         items: [
           {
             title: 'Negative Zahlen kennenlernen',
-            progress: 40,
             color: '#0F8'
           },
           {
             title: 'Mit negativen Zahlen rechnen',
-            progress: 0,
             color: '#0F8'
           },
           {
             title: 'Rechenregeln für die Addition',
-            progress: 0,
             color: '#0F8'
           },
           {
             title: 'Addition (1)',
-            progress: 0,
             color: '#0F8'
           },
           {
             title: 'Addition (2)',
-            progress: 0,
             color: '#0F8'
           },
           {
             title: 'Addition (3)',
-            progress: 0,
             color: '#0F8'
           },
           {
             title: 'Addition (4)',
-            progress: 0,
             color: '#0F8'
           },
           {
             title: 'Subtraktion (1)',
-            progress: 0,
             color: '#0F8'
           },
           {
             title: 'Subtraktion (2)',
-            progress: 0
+            color: '#0F8'
           },
           {
             title: 'Subtraktion (3)',
-            progress: 0,
             color: '#0F8'
           },
           {
             title: 'Subtraktion (4)',
-            progress: 0,
             color: '#0F8'
           },
           {
             title: 'Abschlusstest',
-            progress: 0,
             color: '#FF5'
           }
         ]

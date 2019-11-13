@@ -10,61 +10,17 @@ import { TransitionContext } from '../transition'
 import { Settings } from './Settings'
 import { Content } from '../content'
 import { TopicScreen } from './TopicScreen'
+import { DummyContent } from './DummyContent'
+import Database from '../database'
 
 // https://www.colorcodehex.com/color-scheme/1014183.html
 
-class Database {
-  index
-  currentUser
-  constructor() {
-    // ok, we are at start up, load :index entry
-    const indexStr = localStorage.getItem(':index')
-    this.index = indexStr ? JSON.parse(indexStr) : { userCounter: 1, users: [] }
-    this.commitIndex()
-    this.currentUser = null
-  }
-  getAllUsers() {
-    const result = []
-    this.index.users.forEach(id => {
-      const curUser = localStorage.getItem('user:' + id)
-      if (curUser) {
-        result.push(JSON.parse(curUser))
-      }
-    })
-    return result
-  }
-  addNewUser() {
-    this.currentUser = { key: this.index.userCounter++ }
-    this.index.users.push(this.currentUser.key)
-    this.commitIndex()
-    this.commmitCurrentUser()
-  }
-  commitIndex() {
-    localStorage.setItem(':index', JSON.stringify(this.index))
-  }
-  commmitCurrentUser() {
-    if (this.currentUser) {
-      localStorage.setItem(
-        'user:' + this.currentUser.key,
-        JSON.stringify(this.currentUser)
-      )
-    }
-  }
-  deleteUser(key) {
-    localStorage.removeItem('user:' + key)
-    this.index.users = this.index.users.filter(k => k !== key)
-    this.commitIndex()
-  }
-}
-
 export const Host = props => {
-  // params: localStorage-Access
-  // current page
-  console.log('render host')
   const transition = React.useContext(TransitionContext)
   const database = React.useRef(new Database())
   const [page, setPage] = React.useState('StartScreen')
   const [topic, setTopic] = React.useState(null)
+  const [key, setKey] = React.useState(null)
   if (page == 'StartScreen') {
     const users = database.current.getAllUsers()
     return (
@@ -81,7 +37,6 @@ export const Host = props => {
             })
           }
           if (action == 'new') {
-            //database.current.addNewUser()
             database.current.currentUser = {}
             transition.setMode('forward')
             transition.hide(() => {
@@ -96,8 +51,7 @@ export const Host = props => {
   if (page == 'HomeScreen') {
     return (
       <HomeScreen
-        username={database.current.currentUser.username}
-        color={database.current.currentUser.color}
+        user={database.current.currentUser}
         content={Content}
         heading="Themenübersicht"
         onAction={(action, arg) => {
@@ -123,9 +77,13 @@ export const Host = props => {
   }
   if (page == 'TopicScreen' && topic) {
     let tt = null
+    let bb = null
     Content.map(block => {
       block.topics.map(t => {
-        if (t.title == topic) tt = t
+        if (t.title == topic) {
+          tt = t
+          bb = block
+        }
       })
     })
     if (tt) {
@@ -134,6 +92,8 @@ export const Host = props => {
           title={tt.title}
           image={tt.image}
           list={tt.items}
+          user={database.current.currentUser}
+          block={bb}
           onAction={(action, arg) => {
             console.log(action, arg)
             if (action == 'back') {
@@ -143,12 +103,44 @@ export const Host = props => {
                 transition.show()
               })
             }
+            if (action == 'select') {
+              setKey(bb.heading + tt.title + arg)
+              transition.setMode('forward')
+              transition.hide(() => {
+                setPage('DummyContent')
+                transition.show()
+              })
+            }
           }}
         />
       )
     } else {
       setPage('HomeScreen')
     }
+  }
+  if (page == 'DummyContent') {
+    return (
+      <DummyContent
+        onAction={(action, arg) => {
+          if (action == 'back') {
+            transition.setMode('backward')
+            transition.hide(() => {
+              setPage('TopicScreen')
+              transition.show()
+            })
+          }
+          if (action == 'set-percent') {
+            database.current.currentUser.progress[key] = arg
+            database.current.commmitCurrentUser()
+            transition.setMode('backward')
+            transition.hide(() => {
+              setPage('TopicScreen')
+              transition.show()
+            })
+          }
+        }}
+      />
+    )
   }
   if (page == 'Settings') {
     return (
@@ -343,4 +335,8 @@ export const Example8 = () => {
       onAction={(action, arg) => console.log(action, arg)}
     />
   )
+}
+
+export const Example9 = () => {
+  return <DummyContent onAction={(action, arg) => console.log(action, arg)} />
 }
