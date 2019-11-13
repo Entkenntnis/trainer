@@ -9,6 +9,7 @@
     "type-check": "tsc"
   },
   "dependencies": {
+    "@entkenntnis/mathquill": "^0.11.1",
     "jquery": "3.4.1",
     "react": "16.11.0",
     "react-dom": "16.11.0",

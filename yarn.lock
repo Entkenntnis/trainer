@@ -807,6 +807,11 @@
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
   integrity sha512-5a6wqoJV/xEdbRNKVo6I4hO3VjyDq//8q2f9I6PBAvMesJHFauXDorcNCsr9RzvsZnaWi5NYCcfyqP1QeFHFbw==
 
+"@entkenntnis/mathquill@^0.11.1":
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/@entkenntnis/mathquill/-/mathquill-0.11.1.tgz#161cb1555f755e3a8816b9eaf2062d1ff8f9eb13"
+  integrity sha512-Z/iJ9KgOzLqx9/5uN7UdUXzssTWgqeYuMb6Y460+z2HnO+9l3WjLgTebvQMYb1/4dsDlJuhA5r7rqqRJbWvuPA==
+
 "@types/node@^12.12.7":
   version "12.12.7"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.7.tgz#01e4ea724d9e3bd50d90c11fd5980ba317d8fa11"
