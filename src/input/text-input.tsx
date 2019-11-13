@@ -4,7 +4,7 @@ import React from 'react'
 
 import 'react-simple-keyboard/build/css/index.css'
 
-const MathQuillComponent = dynamic(() => import('../react-mathquill'), {
+const MathQuillComponent = dynamic(() => import('./mathquill'), {
   ssr: false
 })
 
@@ -44,32 +44,28 @@ export const TextInput = React.forwardRef((props: any, ref: any) => {
     }
   }, [])
   return (
-    <div className="mq-text-style">
-      <MathQuillComponent
-        mathquillDidMount={mq => {
-          if (ref) ref.current = mq
-          mathquill.current = mq
-          //context.addFocusable({ current: mq })
-        }}
-        latex={
+    <MathQuillComponent
+      mathquillDidMount={mq => {
+        if (ref) ref.current = mq
+        mathquill.current = mq
+        mq.typedText(
           props.defaultValue ? props.defaultValue.replace(/ /g, '\\ ') : ''
-        }
-        config={{
-          substituteTextarea: () => {
-            const element = document.createElement('span')
-            const att = document.createAttribute('tabindex')
-            att.value = '0'
-            element.setAttributeNode(att)
-            return element
-          },
-          supSubsRequireOperand: true,
-          handlers: {},
-          autoCommands: '',
-          autoOperatorNames: '',
-          ignoreEq: true
-        }}
-      ></MathQuillComponent>
-    </div>
+        )
+        //context.addFocusable({ current: mq })
+      }}
+      config={{
+        substituteTextarea: () => {
+          const element = document.createElement('span')
+          const att = document.createAttribute('tabindex')
+          att.value = '0'
+          element.setAttributeNode(att)
+          return element
+        },
+        supSubsRequireOperand: true,
+        handlers: {},
+        textMode: true
+      }}
+    ></MathQuillComponent>
   )
 })
 
@@ -89,7 +85,7 @@ const layouts = {
   sym: [
     '1 2 3 4 5 6 7 8 9 0',
     ". ? ! ' , : ; @ # ( )",
-    '+ - = < > [ ] " bksp',
+    '+ - = < > [ ] " / bksp',
     'ABC {space} submit'
   ]
 }

@@ -166,10 +166,7 @@ var P = (function(prototype, ownProperty, undefined) {
     // set the constructor property on the prototype, for convenience
     proto.constructor = C;
 
-    C.mixin = function(def) {
-      Bare[prototype] = C[prototype] = P(C, def)[prototype];
-      return C;
-    }
+    C.extend = function(def) { return P(C, def); }
 
     return (C.open = function(def) {
       extensions = {};
@@ -364,7 +361,7 @@ var Node = P(function(_) {
   _.isEmpty = function() {
     return this.ends[L] === 0 && this.ends[R] === 0;
   };
-
+  
   _.isStyleBlock = function() {
     return false;
   };
@@ -1124,10 +1121,11 @@ function getInterface(v) {
     };
     _.moveToLeftEnd = function() { return this.moveToDirEnd(L); };
     _.moveToRightEnd = function() { return this.moveToDirEnd(R); };
-
+    
     _.cursorDepth = function() {
       return this.__controller.cursor.depth()
     }
+
     _.keystroke = function(keys) {
       var keys = keys.replace(/^\s+|\s+$/g, '').split(/\s+/);
       for (var i = 0; i < keys.length; i += 1) {
@@ -2434,8 +2432,6 @@ Controller.open(function(_) {
         else return;
       }
     }
-    // don't use animate, so we can use jquery slim
-    this.root.jQ.scrollLeft(this.root.jQ.scrollLeft() + scrollBy)
     //this.root.jQ.stop().animate({ scrollLeft: '+=' + scrollBy}, 100);
   };
 });
@@ -2877,6 +2873,12 @@ var MathBlock = P(MathElement, function(_, super_) {
   };
   _.chToCmd = function(ch, options) {
     var cons;
+    if (options.textMode) {
+      var html;
+      if (ch === '<') html = '&lt;';
+      else if (ch === '>') html = '&gt;';
+      return VanillaSymbol(ch, html)
+    }
     // exclude f because it gets a dedicated command with more spacing
     if (ch.match(/^[a-eg-zA-Z]$/))
       return Letter(ch);
@@ -3913,8 +3915,7 @@ CharCmds['/'] = P(Fraction, function(_, super_) {
           leftward instanceof (LatexCmds.text || noop) ||
           leftward instanceof SummationNotation ||
           leftward.ctrlSeq === '\\ ' ||
-          /^[,;:]$/.test(leftward.ctrlSeq) ||
-          '()[]'.includes(leftward.ctrlSeq)
+          /^[,;:]$/.test(leftward.ctrlSeq)/* possible improvement: || '()[]'.includes(leftward.ctrlSeq)*/
         ) //lookbehind for operator
       ) leftward = leftward[L];
 
@@ -4695,7 +4696,6 @@ var Variable = P(Symbol, function(_, super_) {
 
 Options.p.autoCommands = { _maxLength: 0 };
 optionProcessors.autoCommands = function(cmds) {
-  if (!cmds) return {}
   if (!/^[a-z]+(?: [a-z]+)*$/i.test(cmds)) {
     throw '"'+cmds+'" not a space-delimited list of only letters';
   }
@@ -4850,7 +4850,6 @@ var TwoWordOpNames = { limsup: 1, liminf: 1, projlim: 1, injlim: 1 };
   }
 }());
 optionProcessors.autoOperatorNames = function(cmds) {
-  if (!cmds) return {}
   if (!/^[a-z]+(?: [a-z]+)*$/i.test(cmds)) {
     throw '"'+cmds+'" not a space-delimited list of only letters';
   }
@@ -5102,7 +5101,7 @@ var PlusMinus = P(BinaryOperator, function(_) {
 
       return 'mq-binary-operator';
     };
-
+    
     if (dir === R) return; // ignore if sibling only changed on the right
     this.jQ[0].className = determineOpClassType(this);
     return this;
@@ -5162,11 +5161,9 @@ var Equality = P(BinaryOperator, function(_, super_) {
   };
   _.createLeftOf = function(cursor) {
     if (cursor[L] instanceof Inequality && cursor[L].strict) {
-      if (!cursor.options.ignoreEq) {
-        cursor[L].swap(false);
-        cursor[L].bubble('reflow');
-        return;
-      }
+      cursor[L].swap(false);
+      cursor[L].bubble('reflow');
+      return;
     }
     super_.createLeftOf.apply(this, arguments);
   };
