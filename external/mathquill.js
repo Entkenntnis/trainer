@@ -361,7 +361,7 @@ var Node = P(function(_) {
   _.isEmpty = function() {
     return this.ends[L] === 0 && this.ends[R] === 0;
   };
-  
+
   _.isStyleBlock = function() {
     return false;
   };
@@ -1121,7 +1121,7 @@ function getInterface(v) {
     };
     _.moveToLeftEnd = function() { return this.moveToDirEnd(L); };
     _.moveToRightEnd = function() { return this.moveToDirEnd(R); };
-    
+
     _.cursorDepth = function() {
       return this.__controller.cursor.depth()
     }
@@ -5101,7 +5101,7 @@ var PlusMinus = P(BinaryOperator, function(_) {
 
       return 'mq-binary-operator';
     };
-    
+
     if (dir === R) return; // ignore if sibling only changed on the right
     this.jQ[0].className = determineOpClassType(this);
     return this;

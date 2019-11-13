@@ -33,7 +33,7 @@
   -webkit-box-shadow: #8bd 0 0 1px 2px, inset #6ae 0 0 2px 0;
   -moz-box-shadow: #8bd 0 0 1px 2px, inset #6ae 0 0 2px 0;
   box-shadow: #8bd 0 0 1px 2px, inset #6ae 0 0 2px 0;
-  border-color: #709AC0;
+  border-color: #709ac0;
   border-radius: 1px;
 }
 .mq-math-mode .mq-editable-field {
@@ -41,7 +41,7 @@
 }
 .mq-editable-field .mq-latex-command-input {
   color: inherit;
-  font-family: "Courier New", monospace;
+  font-family: 'Courier New', monospace;
   border: 1px solid gray;
   padding-right: 1px;
   margin-right: 1px;
@@ -101,7 +101,7 @@
 .mq-math-mode var,
 .mq-math-mode .mq-text-mode,
 .mq-math-mode .mq-nonSymbola {
-  font-family: "Times New Roman", Symbola, serif;
+  font-family: 'Times New Roman', Symbola, serif;
   line-height: 0.9;
 }
 .mq-math-mode * {
@@ -135,7 +135,7 @@
   min-width: 1ex;
 }
 .mq-math-mode .mq-font {
-  font: 1em "Times New Roman", Symbola, serif;
+  font: 1em 'Times New Roman', Symbola, serif;
 }
 .mq-math-mode .mq-font * {
   font-family: inherit;
@@ -258,7 +258,7 @@
   display: block;
 }
 .mq-math-mode .mq-operator-name {
-  font-family: Symbola, "Times New Roman", serif;
+  font-family: Symbola, 'Times New Roman', serif;
   line-height: 0.9;
   font-style: normal;
 }
@@ -367,7 +367,7 @@
 .mq-math-mode,
 .mq-math-mode .mq-editable-field {
   cursor: text;
-  font-family: Symbola, "Times New Roman", serif;
+  font-family: Symbola, 'Times New Roman', serif;
 }
 .mq-math-mode .mq-overarc {
   border-top: 1px solid black;
@@ -402,7 +402,7 @@
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
   filter: FlipH;
-  -ms-filter: "FlipH";
+  -ms-filter: 'FlipH';
 }
 .mq-math-mode .mq-overarrow.mq-arrow-both {
   vertical-align: text-bottom;
@@ -419,7 +419,7 @@
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
   filter: FlipH;
-  -ms-filter: "FlipH";
+  -ms-filter: 'FlipH';
 }
 .mq-math-mode .mq-overarrow.mq-arrow-both:after {
   display: block;
@@ -437,14 +437,14 @@
 .mq-editable-field .mq-selection .mq-non-leaf,
 .mq-math-mode .mq-selection .mq-scaled,
 .mq-editable-field .mq-selection .mq-scaled {
-  background: #B4D5FE !important;
+  background: #b4d5fe !important;
   background: Highlight !important;
   color: HighlightText;
   border-color: HighlightText;
 }
 .mq-math-mode .mq-selection .mq-matrixed,
 .mq-editable-field .mq-selection .mq-matrixed {
-  background: #39F !important;
+  background: #39f !important;
 }
 .mq-math-mode .mq-selection .mq-matrixed-container,
 .mq-editable-field .mq-selection .mq-matrixed-container {
@@ -458,7 +458,7 @@
 .mq-editable-field .mq-selection.mq-blur .mq-scaled,
 .mq-math-mode .mq-selection.mq-blur .mq-matrixed,
 .mq-editable-field .mq-selection.mq-blur .mq-matrixed {
-  background: #D4D4D4 !important;
+  background: #d4d4d4 !important;
   color: black;
   border-color: black;
 }
