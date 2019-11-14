@@ -1,43 +1,69 @@
-// On Screen Input
 import React from 'react'
 
-function warnOutOfContext() {
-  console.warn('OSI Contexts called outside of context provider!')
+/*
+Handles On Screen Input behaviour:
+
+Ensures current input is always focused, autoFocus element on start
+
+Add elements to context on render
+*/
+
+export interface OSIOptions {
+  autoFocus?: boolean
 }
 
-export const OSIContext = React.createContext<any>({
-  addElement: warnOutOfContext,
-  removeElement: warnOutOfContext
-})
+export interface OSIParameters {
+  domElement?: () => HTMLElement
+  focus?: () => void
+  reactComponent?: any
+}
+
+export interface OSIContextValue {
+  addElement: (params: OSIParameters, options?: OSIOptions) => number
+  removeElement: (key: number) => void
+}
+
+export const OSIContext = React.createContext<OSIContextValue>({} as any)
 
 export function addOSI(child) {
   let counter = 1
   let elements = []
   let currentElement = null
-  const osiUpdate = { current: null }
+  const keyboardUpdate = { current: null }
 
-  function addElement(params, options) {
+  function updateKeyboard(comp) {
+    if (currentElement) {
+      if (keyboardUpdate.current) {
+        keyboardUpdate.current(comp)
+      }
+    }
+  }
+
+  function autoFocus(element, delay) {
+    if (currentElement) return
+    if (element.domElement()) {
+      currentElement = element
+      updateKeyboard(element.reactComponent)
+      setTimeout(() => element.focus())
+    } else {
+      setTimeout(() => {
+        autoFocus(element, delay * 2)
+      }, delay) // try again
+    }
+  }
+
+  function addElement(params: OSIParameters, options: OSIOptions) {
     const key = counter++
     const element = {
       key,
-      domElement: params.domElement ? params.domElement : () => {},
-      focus: params.focus ? params.focus : () => {},
-      reactComponent: params.reactComponent ? params.reactComponent : null
+      domElement: () => {},
+      focus: () => {},
+      reactComponent: null,
+      ...params
     }
     elements.push(element)
-    function autoFocus() {
-      if (currentElement == null && element.domElement()) {
-        if (osiUpdate.current) osiUpdate.current.update(element.reactComponent)
-        setTimeout(() => element.focus())
-        currentElement = element
-      } else {
-        if (currentElement == null) {
-          setTimeout(autoFocus, 50)
-        }
-      }
-    }
     if (options && options.autoFocus) {
-      autoFocus()
+      autoFocus(element, 10)
     }
     return key
   }
@@ -45,20 +71,18 @@ export function addOSI(child) {
   function removeElement(key) {
     elements = elements.filter(element => element.key !== key)
     if (currentElement && currentElement.key === key) {
-      osiUpdate.current.update(null)
+      updateKeyboard(null)
       currentElement = null
     }
   }
 
   function handleFocus(event) {
-    //console.log('handle focus')
     const target = event.target
     for (const element of elements) {
       if (element.domElement().contains(target)) {
         if (!currentElement || element.key !== currentElement.key) {
           currentElement = element
-          if (osiUpdate.current)
-            osiUpdate.current.update(element.reactComponent)
+          updateKeyboard(element.reactComponent)
           setTimeout(() => element.focus())
         }
         return
@@ -78,7 +102,7 @@ export function addOSI(child) {
 
   const InputArea = () => {
     const [keyboard, setKeyboard] = React.useState(null)
-    osiUpdate.current = { update: setKeyboard }
+    keyboardUpdate.current = setKeyboard
     return keyboard
   }
 
@@ -86,11 +110,11 @@ export function addOSI(child) {
     return (
       <>
         <div
-          className="outer-container"
+          className="osi-container"
           onMouseDown={handleFocus}
           onTouchStart={handleFocus}
         >
-          <div className="child">
+          <div className="osi-child">
             <OSIContext.Provider value={osiContext}>
               {React.createElement(child, props)}
             </OSIContext.Provider>
@@ -100,7 +124,7 @@ export function addOSI(child) {
           </div>
         </div>
         <style jsx>{`
-          .outer-container {
+          .osi-container {
             display: flex;
             flex-direction: column;
             flex-wrap: nowrap;
@@ -109,9 +133,8 @@ export function addOSI(child) {
             padding: 0;
             width: 100vw;
             height: 100vh;
-            user-select: none;
           }
-          .child {
+          .osi-child {
             flex-grow: 1;
             position: relative;
           }

@@ -1,3 +1,5 @@
+// BIG TODO: REFACTOREN
+
 export default class Database {
   index
   currentUser

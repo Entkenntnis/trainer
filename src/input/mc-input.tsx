@@ -1,11 +1,11 @@
-import { OSIContext } from '../osi'
+import { OSIContext } from '../layers/osi'
 import React from 'react'
 
 export const McInput = props => {
   const context = React.useContext(OSIContext)
   const span = React.useRef<any>()
   const [value, setValue] = React.useState(null)
-  const elKey = React.useRef()
+  const elKey = React.useRef<number>()
 
   React.useEffect(() => {
     elKey.current = context.addElement({

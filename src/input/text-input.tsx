@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic'
-import { OSIContext } from '../osi'
+import { OSIContext } from '../layers/osi'
 import React from 'react'
 
 import 'react-simple-keyboard/build/css/index.css'

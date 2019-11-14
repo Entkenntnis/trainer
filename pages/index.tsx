@@ -1,6 +1,5 @@
-import React from 'react'
-import App from '../src/app'
+import Main from '../src/main'
 
-const Home = () => <App />
-
-export default Home
+export default function Index() {
+  return <Main />
+}

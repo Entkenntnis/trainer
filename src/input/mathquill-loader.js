@@ -4,6 +4,8 @@ import MathQuill from 'exports-loader?window.MathQuill!imports-loader?window.jQu
 
 import '@entkenntnis/mathquill/build/mathquill.css'
 
+console.log('loading mathquill')
+
 /*
 Useful for local development:
 

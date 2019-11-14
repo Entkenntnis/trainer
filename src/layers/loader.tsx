@@ -1,6 +1,14 @@
 import React from 'react'
 
-export const addLoader = child => {
+/*
+Adds a loading spinner while react is not mounted
+
+Just add it as HOC:
+
+const comp = addLoader('root')(origComp)
+*/
+
+export const addLoader = reactId => child => {
   return props => {
     const [loaded, setLoaded] = React.useState(false)
     React.useEffect(() => {
@@ -10,7 +18,7 @@ export const addLoader = child => {
       <>
         {loaded ? React.createElement(child, props) : null}
         <style jsx global>{`
-          #__next:empty {
+          #${reactId}:empty {
             position: absolute;
             top: calc(50% - 2em);
             left: calc(50% - 2em);
