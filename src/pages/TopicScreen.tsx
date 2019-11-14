@@ -1,4 +1,18 @@
+import React from 'react'
+
 export const TopicScreen = props => {
+  const refs = {}
+  props.list.forEach(item => {
+    refs[item.title] = React.createRef()
+  })
+  React.useEffect(() => {
+    const as = props.autoScroll
+    const r = refs[as]
+    console.log(as, r)
+    if (as && r && r.current) {
+      r.current.scrollIntoView()
+    }
+  }, [])
   return (
     <>
       <div className="container">
@@ -28,12 +42,18 @@ export const TopicScreen = props => {
                   return (
                     <div
                       key={item.title}
-                      className="content-block-topic"
+                      ref={refs[item.title]}
+                      className={'content-block-topic'}
                       onClick={() => {
                         props.onAction('select', item.title)
                       }}
                     >
-                      <div className="content-block-topic-title">
+                      <div
+                        className={
+                          'content-block-topic-title' +
+                          (props.highlight == item.title ? ' active' : '')
+                        }
+                      >
                         {item.title}
                       </div>
                       <div className="spacer"></div>
@@ -128,6 +148,10 @@ export const TopicScreen = props => {
           flex-direction: row;
           align-items: center;
           cursor: pointer;
+        }
+        .content-block-topic-title.active {
+          border: 2px dotted grey;
+          padding: 0.1em;
         }
         .content-block-topic:active {
           background-color: lightgrey;

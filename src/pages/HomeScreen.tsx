@@ -1,4 +1,21 @@
+import React from 'react'
+
 export const HomeScreen = props => {
+  const refs = {}
+  props.content.forEach(block => {
+    block.topics.forEach(topic => {
+      refs[topic.title] = React.createRef()
+    })
+  })
+  React.useEffect(() => {
+    if (
+      props.autoScroll &&
+      refs[props.autoScroll] &&
+      refs[props.autoScroll].current
+    ) {
+      setTimeout(() => refs[props.autoScroll].current.scrollIntoView())
+    }
+  }, [])
   return (
     <>
       <div className="container">
@@ -28,9 +45,15 @@ export const HomeScreen = props => {
                     onClick={() => {
                       props.onAction('select', topic.title)
                     }}
+                    ref={refs[topic.title]}
                   >
                     <img className="content-block-image" src={topic.image} />
-                    <div className="content-block-topic-title">
+                    <div
+                      className={
+                        'content-block-topic-title ' +
+                        (topic.title == props.highlight ? 'highlight' : '')
+                      }
+                    >
                       {topic.title}
                     </div>
                     <div className="spacer"></div>
@@ -147,6 +170,10 @@ export const HomeScreen = props => {
         }
         .content-block-topic-title {
           margin-left: 1.4em;
+        }
+        .content-block-topic-title.highlight {
+          border: 2px dotted grey;
+          padding: 0.1em;
         }
         .forward {
           padding: 0.4em;

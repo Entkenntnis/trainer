@@ -21,6 +21,7 @@ export const Host = props => {
   const [page, setPage] = React.useState('StartScreen')
   const [topic, setTopic] = React.useState(null)
   const [key, setKey] = React.useState(null)
+  const [item, setItem] = React.useState(null)
   if (page == 'StartScreen') {
     const users = database.current.getAllUsers()
     return (
@@ -54,6 +55,8 @@ export const Host = props => {
         user={database.current.currentUser}
         content={Content}
         heading="Themenübersicht"
+        autoScroll={topic}
+        highlight={topic}
         onAction={(action, arg) => {
           console.log(action, arg)
           if (action == 'settings') {
@@ -94,6 +97,8 @@ export const Host = props => {
           list={tt.items}
           user={database.current.currentUser}
           block={bb}
+          autoScroll={item}
+          highlight={item}
           onAction={(action, arg) => {
             console.log(action, arg)
             if (action == 'back') {
@@ -105,6 +110,7 @@ export const Host = props => {
             }
             if (action == 'select') {
               setKey(bb.heading + tt.title + arg)
+              setItem(arg)
               transition.setMode('forward')
               transition.hide(() => {
                 setPage('DummyContent')
