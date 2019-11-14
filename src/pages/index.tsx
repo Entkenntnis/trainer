@@ -102,6 +102,7 @@ export const Host = props => {
           onAction={(action, arg) => {
             console.log(action, arg)
             if (action == 'back') {
+              setItem(null)
               transition.setMode('backward')
               transition.hide(() => {
                 setPage('HomeScreen')

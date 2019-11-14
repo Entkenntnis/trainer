@@ -10,7 +10,7 @@ export const TopicScreen = props => {
     const r = refs[as]
     console.log(as, r)
     if (as && r && r.current) {
-      r.current.scrollIntoView()
+      r.current.scrollIntoView({ block: 'center' })
     }
   }, [])
   return (

@@ -13,7 +13,9 @@ export const HomeScreen = props => {
       refs[props.autoScroll] &&
       refs[props.autoScroll].current
     ) {
-      setTimeout(() => refs[props.autoScroll].current.scrollIntoView())
+      setTimeout(() =>
+        refs[props.autoScroll].current.scrollIntoView({ block: 'center' })
+      )
     }
   }, [])
   return (
