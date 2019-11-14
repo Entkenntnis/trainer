@@ -72,17 +72,17 @@ export const Content: any = [
     heading: 'Mathematik 6. Klasse',
     topics: [
       {
-        image: 'G.png',
+        image: 'E.png',
         title: 'Einstieg Bruchrechnung',
         items: []
       },
       {
-        image: 'L.png',
+        image: 'K.png',
         title: 'Koordinatensystem',
         items: []
       },
       {
-        image: 'N.png',
+        image: 'Z.png',
         title: 'Zahlenrätsel',
         items: []
       }
@@ -92,17 +92,17 @@ export const Content: any = [
     heading: 'Mathematik 7. Klasse',
     topics: [
       {
-        image: 'N.png',
+        image: 'E.png',
         title: 'Einstieg Gleichungen lösen',
         items: []
       },
       {
-        image: 'L.png',
+        image: 'K.png',
         title: 'Konstruktion mit Zirkel und Lineal',
         items: []
       },
       {
-        image: 'N.png',
+        image: 'S.png',
         title: 'Sachaufgaben zu Termen',
         items: []
       }

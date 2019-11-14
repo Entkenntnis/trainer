@@ -129,6 +129,9 @@ export const TopicScreen = props => {
           align-items: center;
           cursor: pointer;
         }
+        .content-block-topic:active {
+          background-color: lightgrey;
+        }
         .content-block-topic-title {
           margin-left: 0.6em;
         }

@@ -3,15 +3,15 @@ export const Settings = props => {
     <>
       <div className="container">
         <div className="titlebar">
+          <div className="title">&nbsp;&nbsp;&nbsp;Einstellungen</div>
           <div
             className="exit"
             onClick={() => {
               props.onAction('exit')
             }}
           >
-            &lt;
+            X
           </div>
-          <div className="title">Einstellungen</div>
         </div>
         <div className="settings">
           <p className="name">
@@ -57,8 +57,8 @@ export const Settings = props => {
         }
         .exit {
           cursor: pointer;
-          padding-right: 0.8em;
-          padding-left: 0.35em;
+          padding-right: 0.35em;
+          padding-left: 0.8em;
           padding-top: 0.1em;
         }
         .exit:active {

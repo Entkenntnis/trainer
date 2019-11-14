@@ -57,7 +57,7 @@ export const Host = props => {
         onAction={(action, arg) => {
           console.log(action, arg)
           if (action == 'settings') {
-            transition.setMode('forward')
+            transition.setMode('fade')
             transition.hide(() => {
               setPage('Settings')
               transition.show()
@@ -165,7 +165,7 @@ export const Host = props => {
             })
           }
           if (action == 'exit') {
-            transition.setMode('backward')
+            transition.setMode('fade')
             transition.hide(() => {
               setPage('HomeScreen')
               transition.show()

@@ -138,6 +138,9 @@ export const HomeScreen = props => {
           align-items: center;
           cursor: pointer;
         }
+        .content-block-topic:active {
+          background-color: lightgrey;
+        }
         .content-block-image {
           height: 3.5em;
           margin-left: 0.5em;

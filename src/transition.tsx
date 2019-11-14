@@ -15,6 +15,7 @@ export function addTransition(child) {
   const timeouts = {
     forward: { enter: 200, exit: 0 },
     backward: { enter: 0, exit: 200 },
+    fade: { enter: 100, exit: 100 },
     none: { enter: 0, exit: 0 }
   }
 
@@ -110,6 +111,20 @@ export function addTransition(child) {
           }
           .fixed-container :global(.whole-page-none-exit-done) {
             opacity: 0;
+          }
+          .fixed-container :global(.whole-page-fade-exit-active) {
+            opacity: 0;
+            transition: opacity ${timeouts.fade.exit}ms;
+          }
+          .fixed-container :global(.whole-page-fade-exit-done) {
+            opacity: 0;
+          }
+          .fixed-container :global(.whole-page-fade-enter) {
+            opacity: 0;
+          }
+          .fixed-container :global(.whole-page-fade-enter-active) {
+            opacity: 1;
+            transition: opacity ${timeouts.fade.enter}ms;
           }
         `}</style>
       </>
