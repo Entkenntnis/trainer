@@ -39,7 +39,7 @@ export const addProfile = child => {
   try {
     localStorage.getItem('xyz')
   } catch (e) {
-    return null
+    return props => React.createElement(child, props)
   }
   // Lade die Index-Datei mit der Liste der Benutzer
   // Stelle sicher, dass sie vollständig ist

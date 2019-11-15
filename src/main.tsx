@@ -8,9 +8,15 @@ import { addContent } from './layers/content'
 import { addProfile } from './layers/profile'
 import DevContent from '../content/DevContent'
 
-const Entrypoint = addLoader('__next')(
-  addTransition(addOSI(addContent(DevContent)(addProfile(App))))
-)
+const layers: any = [
+  addLoader('__next'),
+  addTransition,
+  addOSI,
+  addContent(DevContent),
+  addProfile
+]
+
+const Entrypoint = layers.reduceRight((acc, val) => val(acc), App)
 
 export default function Main() {
   return (

@@ -110,6 +110,11 @@ export function addTransition(child) {
             left: 0;
           }
 
+          .transition-container {
+            width: 100%;
+            height: 100%;
+          }
+
           .fixed-container :global(.whole-page-forward-exit-active) {
             opacity: 0;
             transition: opacity ${timeouts.forward.exit}ms;
