@@ -1,11 +1,16 @@
 import Head from 'next/head'
-import { App } from './pages'
-import { addOSI } from './layers/osi'
-import { addTransition } from './layers/transition'
-import { addLoader } from './layers/loader'
-import { addProfile } from './layers/profile'
 
-const Entrypoint = addLoader('__next')(addTransition(addOSI(addProfile(App))))
+import { App } from './app'
+import { addLoader } from './layers/loader'
+import { addTransition } from './layers/transition'
+import { addOSI } from './layers/osi'
+import { addContent } from './layers/content'
+import { addProfile } from './layers/profile'
+import DevContent from '../content/DevContent'
+
+const Entrypoint = addLoader('__next')(
+  addTransition(addOSI(addContent(DevContent)(addProfile(App))))
+)
 
 export default function Main() {
   return (

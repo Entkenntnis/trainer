@@ -1,4 +1,4 @@
-export const Content: any = [
+export const ToC: any = [
   {
     heading: 'Mathematik 5. Klasse',
     topics: [

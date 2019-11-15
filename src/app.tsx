@@ -1,22 +1,21 @@
 import React from 'react'
 
-import { StartScreen } from './StartScreen'
-import { RegisterName } from './RegisterName'
-import { RegisterColor } from './RegisterColor'
-import { HomeScreen } from './HomeScreen'
+import { StartScreen } from './pages/StartScreen'
+import { RegisterName } from './pages/RegisterName'
+import { RegisterColor } from './pages/RegisterColor'
+import { HomeScreen } from './pages/HomeScreen'
+import { Settings } from './pages/Settings'
+import { TopicScreen } from './pages/TopicScreen'
+import { DummyContent } from './pages/DummyContent'
 
-import { TransitionContext } from '../layers/transition'
-import { Settings } from './Settings'
-import { Content } from '../../content/dummy'
-import { TopicScreen } from './TopicScreen'
-import { DummyContent } from './DummyContent'
-import { ProfileContext } from '../layers/profile'
+import { TransitionContext } from './layers/transition'
+import { ProfileContext } from './layers/profile'
+import { ContentContext } from './layers/content'
 
-// https://www.colorcodehex.com/color-scheme/1014183.html
-
-export const App = props => {
+export const App = () => {
   const transition = React.useContext(TransitionContext)
   const profile = React.useContext(ProfileContext)
+  const content = React.useContext(ContentContext)
   const [page, setPage] = React.useState('StartScreen')
   const [topic, setTopic] = React.useState(null)
   const [key, setKey] = React.useState(null)
@@ -51,7 +50,7 @@ export const App = props => {
       <HomeScreen
         username={profile.getUserName(user)}
         usercolor={profile.getUserColor(user)}
-        content={Content}
+        content={content.getToC()}
         getProgress={pkey => profile.getUserProgress(user, pkey)}
         heading="Themenübersicht"
         autoScroll={topic}
@@ -74,7 +73,7 @@ export const App = props => {
   if (page == 'TopicScreen' && topic) {
     let tt = null
     let bb = null
-    Content.map(block => {
+    content.getToC().map(block => {
       block.topics.map(t => {
         if (t.title == topic) {
           tt = t

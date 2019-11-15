@@ -1,9 +1,9 @@
 import React from 'react'
 
-import { Content } from '../../content/dummy'
+import DevContent from '../../content/DevContent'
 
 import { StartScreen } from './StartScreen'
-import { Trainer } from './Trainer'
+import { Trainer } from './_Trainer'
 import { RegisterName } from './RegisterName'
 import { RegisterColor } from './RegisterColor'
 import { HomeScreen } from './HomeScreen'
@@ -52,7 +52,7 @@ export const Example5 = () => {
       username="Max"
       color="SaddleBrown"
       heading="Themenübersicht"
-      content={Content}
+      content={DevContent.getToC()}
       onAction={(action, arg) => console.log(action, arg)}
     />
   )
@@ -86,7 +86,7 @@ export const Example8 = () => {
     <TopicScreen
       heading="Negative Zahlen"
       image="N.png"
-      list={Content[0].topics[0].items}
+      list={DevContent.getToC()[0].topics[0].items}
       onAction={(action, arg) => console.log(action, arg)}
     />
   )

@@ -1,5 +1,9 @@
 import React from 'react'
 
+/*
+Manages user profiles
+*/
+
 export interface ProfileAPI {
   getAll: () => any
   addUser: (username: string, color: string) => number
