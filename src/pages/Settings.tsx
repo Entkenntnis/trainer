@@ -1,39 +1,33 @@
 export const Settings = props => {
+  const { color, username, onExit, onDelete, onLogout, onFullscreen } = props
   return (
     <>
       <div className="container">
         <div className="titlebar">
           <div className="title">&nbsp;&nbsp;&nbsp;Einstellungen</div>
-          <div
-            className="exit"
-            onClick={() => {
-              props.onAction('exit')
-            }}
-          >
+          <div className="exit" onClick={() => onExit()}>
             X
           </div>
         </div>
         <div className="settings">
           <p className="name">
-            <span style={{ color: props.color }}>●</span> {props.username}
+            <span style={{ color }}>●</span> {username}
           </p>
           <p>
             <a
               onClick={() => {
                 if (window.confirm('Wirklich diesen Benutzer LÖSCHEN?'))
-                  props.onAction('delete')
+                  onDelete()
               }}
             >
               🗑 Benutzer löschen
             </a>
           </p>
           <p>
-            <a onClick={() => props.onAction('logout')}>
-              ↷ Abmelden / Benutzer wechseln
-            </a>
+            <a onClick={() => onLogout()}>↷ Abmelden / Benutzer wechseln</a>
           </p>
           <p>
-            <a onClick={() => props.onAction('fullscreen')}>⛶ Vollbild</a>
+            <a onClick={() => onFullscreen()}>⛶ Vollbild</a>
           </p>
         </div>
       </div>

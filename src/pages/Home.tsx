@@ -1,59 +1,67 @@
 import React from 'react'
 
-export const HomeScreen = props => {
-  const refs = {}
-  props.content.forEach(block => {
+export const Home = props => {
+  const {
+    usercolor,
+    username,
+    toc,
+    heading,
+    autoScroll,
+    onSettings,
+    onSelect,
+    highlight,
+    getProgress
+  } = props
+
+  const listRefs = {}
+  toc.forEach(block => {
     block.topics.forEach(topic => {
-      refs[topic.title] = React.createRef()
+      listRefs[topic.title] = React.createRef()
     })
   })
+
   React.useEffect(() => {
-    if (
-      props.autoScroll &&
-      refs[props.autoScroll] &&
-      refs[props.autoScroll].current
-    ) {
+    if (autoScroll && listRefs[autoScroll] && listRefs[autoScroll].current) {
       setTimeout(() =>
-        refs[props.autoScroll].current.scrollIntoView({ block: 'center' })
+        listRefs[autoScroll].current.scrollIntoView({ block: 'center' })
       )
     }
   }, [])
+
   return (
     <>
       <div className="container">
         <div className="statusbar">
-          <span style={{ color: props.usercolor }}>●</span>
-          <span className="username">{props.username}</span>
+          <span style={{ color: usercolor }}>●</span>
+          <span className="username">{username}</span>
           <div className="spacer"></div>
           <span className="settings">
-            <a onClick={() => props.onAction('settings')}>Einstellungen</a>
+            <a onClick={() => onSettings()}>Einstellungen</a>
           </span>
         </div>
         <div className="heading">
           <span>
-            <b>{props.heading}</b>
+            <b>{heading}</b>
           </span>
         </div>
 
         <div className="content">
           <div className="content-list">
-            {props.content.map(block => (
+            {toc.map(block => (
               <div className="content-block" key={block.heading}>
                 <div className="content-block-heading">{block.heading}</div>
                 {block.topics.map(topic => (
                   <div
                     key={topic.title}
                     className="content-block-topic"
-                    onClick={() => {
-                      props.onAction('select', topic.title)
-                    }}
-                    ref={refs[topic.title]}
+                    onClick={() => onSelect(topic.title)}
+                    ref={listRefs[topic.title]}
                   >
                     <img className="content-block-image" src={topic.image} />
                     <div
                       className={
                         'content-block-topic-title ' +
-                        (topic.title == props.highlight ? 'highlight' : '')
+                        (topic.title == highlight ? 'highlight' : '')
                       }
                     >
                       {topic.title}
@@ -61,7 +69,7 @@ export const HomeScreen = props => {
                     <div className="spacer"></div>
                     {topic.items.length > 0 &&
                       topic.items.some(item => {
-                        const p = props.getProgress(
+                        const p = getProgress(
                           block.heading + topic.title + item.title
                         )
                         return p && p > 0
@@ -74,10 +82,10 @@ export const HomeScreen = props => {
                               style={{
                                 backgroundColor: item.color,
                                 width:
-                                  (props.getProgress(
+                                  (getProgress(
                                     block.heading + topic.title + item.title
                                   )
-                                    ? props.getProgress(
+                                    ? getProgress(
                                         block.heading + topic.title + item.title
                                       )
                                     : '0') + '%'

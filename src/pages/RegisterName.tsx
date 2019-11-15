@@ -2,17 +2,13 @@ import { TextInput } from '../input/text-input'
 import React from 'react'
 
 export const RegisterName = props => {
+  const { defaultValue, onBack, onSubmit } = props
   const inputRef = React.useRef()
   return (
     <>
       <div className="container">
         <div className="back">
-          <span
-            className="back-label"
-            onClick={() => {
-              props.onAction('back')
-            }}
-          >
+          <span className="back-label" onClick={() => onBack()}>
             &lt;
           </span>
         </div>
@@ -33,12 +29,12 @@ export const RegisterName = props => {
                         alert('Name ist zu lang, maximal 30 Zeichen!')
                       )
                     } else {
-                      props.onAction('submit', val)
+                      onSubmit(val)
                     }
                   }
                 }}
                 ref={inputRef}
-                defaultValue={props.defaultValue}
+                defaultValue={defaultValue}
               />
             </div>
           </div>

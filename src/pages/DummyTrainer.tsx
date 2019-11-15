@@ -1,13 +1,14 @@
-export const DummyContent = props => {
+export const DummyTrainer = props => {
+  const { onBack, onSetPercent } = props
   return (
     <>
       <div className="container">
         <div className="heading">Wähle dein Ergebnis:</div>
-        <button onClick={() => props.onAction('back')} key="-1">
+        <button onClick={() => onBack()} key="-1">
           &lt;--- zurück
         </button>
         {[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100].map(p => (
-          <button onClick={() => props.onAction('set-percent', p)} key={p}>
+          <button onClick={() => onSetPercent(p)} key={p}>
             {p} %
           </button>
         ))}

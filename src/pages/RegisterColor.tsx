@@ -1,21 +1,19 @@
 import React from 'react'
 
 export const RegisterColor = props => {
+  const { onBack, onSubmit, colors } = props
+
   const [color, setColor] = React.useState(() => {
-    const row = Math.floor(Math.random() * props.colors.length)
-    const col = Math.floor(Math.random() * props.colors[row].length)
-    return props.colors[row][col]
+    const row = Math.floor(Math.random() * colors.length)
+    const col = Math.floor(Math.random() * colors[row].length)
+    return colors[row][col]
   })
+
   return (
     <>
       <div className="container">
         <div className="back">
-          <span
-            className="back-label"
-            onClick={() => {
-              props.onAction('back')
-            }}
-          >
+          <span className="back-label" onClick={() => onBack()}>
             &lt;
           </span>
         </div>
@@ -47,7 +45,7 @@ export const RegisterColor = props => {
                 if (!color) {
                   alert('Bitte Farbe auswählen!')
                 } else {
-                  props.onAction('submit', color)
+                  onSubmit(color)
                 }
               }}
             >

@@ -79,7 +79,7 @@ export const addProfile = child => {
     getAll: () => users,
     addUser: (username, color) => {
       const key = index.userCounter++
-      users[key] = { username, color, progress: {} }
+      users[key] = { username, color, progress: {}, key }
       index.users.push(key)
       commitIndex()
       commitUser(key)

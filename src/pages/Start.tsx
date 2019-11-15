@@ -1,4 +1,5 @@
-export const StartScreen = props => {
+export const Start = props => {
+  const { users, onSelect, onNew } = props
   return (
     <>
       <div className="container">
@@ -7,15 +8,11 @@ export const StartScreen = props => {
             <span className="learnon">Weiterlernen:</span>
           </div>
           <div className="list">
-            {props.users &&
-              props.users.map(user => (
+            {users &&
+              users.map(user => (
                 <div
                   className="list-item"
-                  onClick={() => {
-                    if (props.onAction) {
-                      props.onAction('select', user.key)
-                    }
-                  }}
+                  onClick={() => onSelect(user.key)}
                   key={user.username}
                 >
                   <span style={{ color: user.color }}>●</span>{' '}
@@ -24,14 +21,7 @@ export const StartScreen = props => {
               ))}
           </div>
         </div>
-        <div
-          className="lower"
-          onClick={() => {
-            if (props.onAction) {
-              props.onAction('new')
-            }
-          }}
-        >
+        <div className="lower" onClick={() => onNew()}>
           <span className="newperson">Neues Profil »</span>
         </div>
       </div>

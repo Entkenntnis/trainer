@@ -1,57 +1,67 @@
 import React from 'react'
 
-export const TopicScreen = props => {
-  const refs = {}
-  props.list.forEach(item => {
-    refs[item.title] = React.createRef()
+export const Topic = props => {
+  const {
+    list,
+    autoScroll,
+    title,
+    image,
+    highlight,
+    onBack,
+    onSelect,
+    getProgress,
+    blockHeading
+  } = props
+
+  const listRefs = {}
+  list.forEach(item => {
+    listRefs[item.title] = React.createRef()
   })
+
   React.useEffect(() => {
-    const as = props.autoScroll
-    const r = refs[as]
-    console.log(as, r)
-    if (as && r && r.current) {
-      r.current.scrollIntoView({ block: 'center' })
+    const ref = listRefs[autoScroll]
+    if (autoScroll && ref && ref.current) {
+      ref.current.scrollIntoView({ block: 'center' })
     }
   }, [])
+
   return (
     <>
       <div className="container">
         <div className="statusbar">
-          <span className="back-to-home" onClick={() => props.onAction('back')}>
+          <span className="back-to-home" onClick={() => onBack()}>
             &lt; Themenübersicht
           </span>
           <div className="spacer"></div>
         </div>
         <div className="heading">
           <span>
-            <b>{props.title}</b>
+            <b>{title}</b>
           </span>
         </div>
 
         <div className="content">
           <div className="content-list">
             <div className="topic-image">
-              <img src={props.image} />
+              <img src={image} />
             </div>
 
             <div className="content-block">
-              {props.list &&
-                props.list.map(item => {
-                  const key = props.block.heading + props.title + item.title
-                  const progress = props.getProgress(key)
+              {list &&
+                list.map(item => {
+                  const key = blockHeading + title + item.title
+                  const progress = getProgress(key)
                   return (
                     <div
                       key={item.title}
-                      ref={refs[item.title]}
+                      ref={listRefs[item.title]}
                       className={'content-block-topic'}
-                      onClick={() => {
-                        props.onAction('select', item.title)
-                      }}
+                      onClick={() => onSelect(item.title)}
                     >
                       <div
                         className={
                           'content-block-topic-title' +
-                          (props.highlight == item.title ? ' active' : '')
+                          (highlight == item.title ? ' active' : '')
                         }
                       >
                         {item.title}
