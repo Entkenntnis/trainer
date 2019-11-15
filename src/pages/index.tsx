@@ -10,30 +10,35 @@ import { Settings } from './Settings'
 import { Content } from '../../content/dummy'
 import { TopicScreen } from './TopicScreen'
 import { DummyContent } from './DummyContent'
-import Database from '../layers/database'
+import { ProfileContext } from '../layers/profile'
 
 // https://www.colorcodehex.com/color-scheme/1014183.html
 
 export const App = props => {
   const transition = React.useContext(TransitionContext)
-  const database = React.useRef(new Database())
+  const profile = React.useContext(ProfileContext)
   const [page, setPage] = React.useState('StartScreen')
   const [topic, setTopic] = React.useState(null)
   const [key, setKey] = React.useState(null)
   const [item, setItem] = React.useState(null)
+  const [user, setUser] = React.useState(null)
+  const [tUsername, setTUsername] = React.useState('')
   if (page == 'StartScreen') {
-    const users = database.current.getAllUsers()
+    const usersObj = profile.getAll()
+    const users = []
+    for (const key in usersObj) {
+      users.push(usersObj[key])
+    }
     return (
       <StartScreen
         users={users}
         onAction={(action, arg) => {
           console.log(action, arg)
           if (action == 'select') {
-            database.current.currentUser = arg
+            setUser(arg)
             transition.switch('forward', () => setPage('HomeScreen'))
           }
           if (action == 'new') {
-            database.current.currentUser = {}
             transition.switch('forward', () => setPage('RegisterName'))
           }
         }}
@@ -41,10 +46,13 @@ export const App = props => {
     )
   }
   if (page == 'HomeScreen') {
+    console.log(profile.getUserName(user))
     return (
       <HomeScreen
-        user={database.current.currentUser}
+        username={profile.getUserName(user)}
+        usercolor={profile.getUserColor(user)}
         content={Content}
+        getProgress={pkey => profile.getUserProgress(user, pkey)}
         heading="Themenübersicht"
         autoScroll={topic}
         highlight={topic}
@@ -80,7 +88,7 @@ export const App = props => {
           title={tt.title}
           image={tt.image}
           list={tt.items}
-          user={database.current.currentUser}
+          getProgress={pkey => profile.getUserProgress(user, pkey)}
           block={bb}
           autoScroll={item}
           highlight={item}
@@ -110,8 +118,7 @@ export const App = props => {
             transition.switch('backward', () => setPage('TopicScreen'))
           }
           if (action == 'set-percent') {
-            database.current.currentUser.progress[key] = arg
-            database.current.commmitCurrentUser()
+            profile.setUserProgress(user, key, arg)
             transition.switch('backward', () => setPage('TopicScreen'))
           }
         }}
@@ -121,16 +128,22 @@ export const App = props => {
   if (page == 'Settings') {
     return (
       <Settings
-        username={database.current.currentUser.username}
-        color={database.current.currentUser.color}
+        username={profile.getUserName(user)}
+        color={profile.getUserColor(user)}
         onAction={(action, arg) => {
           console.log(action, arg)
           if (action == 'logout') {
             transition.switch('backward', () => setPage('StartScreen'))
+            setTopic(null)
+            setUser(null)
+            setItem(null)
           }
           if (action == 'delete') {
-            database.current.deleteUser(database.current.currentUser.key)
+            profile.deleteUser(user)
             transition.switch('backward', () => setPage('StartScreen'))
+            setTopic(null)
+            setUser(null)
+            setItem(null)
           }
           if (action == 'exit') {
             transition.switch('fade', () => setPage('HomeScreen'))
@@ -157,15 +170,11 @@ export const App = props => {
   if (page == 'RegisterName') {
     return (
       <RegisterName
-        defaultValue={
-          database.current.currentUser.username
-            ? database.current.currentUser.username
-            : ''
-        }
+        defaultValue={tUsername}
         onAction={(action, arg) => {
           console.log(action, arg)
           if (action == 'submit') {
-            database.current.currentUser.username = arg
+            setTUsername(arg)
             transition.switch('forward', () => setPage('RegisterColor'))
           }
           if (action == 'back') {
@@ -185,11 +194,7 @@ export const App = props => {
             transition.switch('backward', () => setPage('RegisterName'))
           }
           if (action == 'submit') {
-            const user = database.current.currentUser
-            database.current.addNewUser()
-            database.current.currentUser.username = user.username
-            database.current.currentUser.color = arg
-            database.current.commmitCurrentUser()
+            setUser(profile.addUser(tUsername, arg))
             transition.switch('forward', () => setPage('HomeScreen'))
           }
         }}

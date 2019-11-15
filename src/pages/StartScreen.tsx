@@ -1,4 +1,3 @@
-
 export const StartScreen = props => {
   return (
     <>
@@ -14,7 +13,7 @@ export const StartScreen = props => {
                   className="list-item"
                   onClick={() => {
                     if (props.onAction) {
-                      props.onAction('select', user)
+                      props.onAction('select', user.key)
                     }
                   }}
                   key={user.username}

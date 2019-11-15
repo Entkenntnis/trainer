@@ -3,8 +3,9 @@ import { App } from './pages'
 import { addOSI } from './layers/osi'
 import { addTransition } from './layers/transition'
 import { addLoader } from './layers/loader'
+import { addProfile } from './layers/profile'
 
-const Entrypoint = addLoader('__next')(addTransition(addOSI(App)))
+const Entrypoint = addLoader('__next')(addTransition(addOSI(addProfile(App))))
 
 export default function Main() {
   return (

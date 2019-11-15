@@ -38,7 +38,7 @@ export const TopicScreen = props => {
               {props.list &&
                 props.list.map(item => {
                   const key = props.block.heading + props.title + item.title
-                  const progress = props.user.progress[key]
+                  const progress = props.getProgress(key)
                   return (
                     <div
                       key={item.title}

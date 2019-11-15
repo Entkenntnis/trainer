@@ -22,8 +22,8 @@ export const HomeScreen = props => {
     <>
       <div className="container">
         <div className="statusbar">
-          <span style={{ color: props.user.color }}>●</span>
-          <span className="username">{props.user.username}</span>
+          <span style={{ color: props.usercolor }}>●</span>
+          <span className="username">{props.username}</span>
           <div className="spacer"></div>
           <span className="settings">
             <a onClick={() => props.onAction('settings')}>Einstellungen</a>
@@ -61,10 +61,9 @@ export const HomeScreen = props => {
                     <div className="spacer"></div>
                     {topic.items.length > 0 &&
                       topic.items.some(item => {
-                        const p =
-                          props.user.progress[
-                            block.heading + topic.title + item.title
-                          ]
+                        const p = props.getProgress(
+                          block.heading + topic.title + item.title
+                        )
                         return p && p > 0
                       }) && (
                         <div className="progress">
@@ -75,12 +74,12 @@ export const HomeScreen = props => {
                               style={{
                                 backgroundColor: item.color,
                                 width:
-                                  (props.user.progress[
+                                  (props.getProgress(
                                     block.heading + topic.title + item.title
-                                  ]
-                                    ? props.user.progress[
+                                  )
+                                    ? props.getProgress(
                                         block.heading + topic.title + item.title
-                                      ]
+                                      )
                                     : '0') + '%'
                               }}
                             ></div>
