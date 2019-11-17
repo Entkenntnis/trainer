@@ -38,10 +38,12 @@ export const McInput = props => {
               justify-content: center;
             }
             .choice {
-              background-color: #cfcfff;
+              background-color: #7a8bc2;
+              color: white;
               font-family: 'Arial';
               margin: 0.3rem 0.5rem;
               padding: 0.3rem 0.8rem;
+              cursor: pointer;
             }
           `}</style>
         </>
@@ -70,20 +72,22 @@ export const McInput = props => {
 
       <style jsx>{`
         .value {
-          font-family: 'Arial';
-          border-bottom: 2px solid #afafaf;
-          padding: 0 0.4rem;
+          border-bottom: 1px solid #afafaf;
+          padding: 0 0.2em;
         }
         .placeholder {
           display: inline-block;
-          min-width: 3rem;
-          height: 1.1rem;
+          min-width: 1.5em;
+          height: 1em;
+          margin-bottom: 0.3em;
           border: 2px solid #afafaf;
           outline: none;
+          vertical-align: middle;
+          cursor: pointer;
         }
         .placeholder:focus {
-          width: 3rem;
-          border: 2px solid #aaaaef;
+          width: 1.5em;
+          border: 2px solid #7a8bc2;
         }
         .inner {
           border-bottom: 2px solid black;

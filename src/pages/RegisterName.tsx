@@ -1,4 +1,4 @@
-import { TextInput } from '../input/text-input'
+import { TextInput } from '../inline/text-input'
 import React from 'react'
 
 export const RegisterName = props => {

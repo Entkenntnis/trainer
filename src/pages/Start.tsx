@@ -1,3 +1,5 @@
+import { parseInlineHTML } from '../inline/parser'
+
 export const Start = props => {
   const { users, onSelect, onNew } = props
   return (
@@ -19,6 +21,11 @@ export const Start = props => {
                   <span>{user.username}</span>
                 </div>
               ))}
+            <div style={{ lineHeight: '1.5' }}>
+              {parseInlineHTML(
+                'Das ist ein <mc>Lückentext;;Artikle;;Spiel</mc>. Bitte beachte, dass es sich hier um <mc>Ernst;;Spaß</mc> handelt. Also seit <mc>böse;;lieb</mc> miteinander.<br><br>Die Lösung lautet: <gap>45</gap> und wir sollten uns nochmal unterhalten! Die Versuchung ist groß. Deshalb sollten wir <mc>uns;;alle</mc> nochmal überlegen, welche Lösung die <mc>beste;;schlechteste</mc> ist. Auf zu neuen <gap>Welten</gap>!'
+              )}
+            </div>
           </div>
         </div>
         <div className="lower" onClick={() => onNew()}>
